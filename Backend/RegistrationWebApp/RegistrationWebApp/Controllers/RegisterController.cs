@@ -28,12 +28,13 @@ namespace RegistrationWebApp.Controllers
         [HttpPost]
         public IActionResult Index(Patient patient)
         {
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 return View();
             }
-            if (_context.Patients.Any(p => p.Passport == patient.Passport))
+            if (PatientExist(patient))
             {
-                return BadRequest("Паспорт уже существует");
+                return BadRequest("Пациент уже существует");
             }
             var medicalCard = new MedicalCard() { MedicalCardStartDate = DateTime.Now };
             _context.Add(medicalCard);
@@ -60,6 +61,22 @@ namespace RegistrationWebApp.Controllers
             ViewBag.URL = "\\Images\\Qrcode.png";
 
             return View(patient);
+        }
+
+        public async Task<IActionResult> Detail(Patient patient)
+        {
+            //костыль, тк иклуд теряется при передаче
+            var patientWithPolicy = await _context.Patients.Include(i=>i.InsurancePolicy).FirstOrDefaultAsync(p=>p.PatientId == patient.PatientId);
+            if (patient is null)
+            {
+                return BadRequest("не найден пациент по qr коду");
+            }
+            return View(patientWithPolicy);
+        }
+
+        private bool PatientExist(Patient patient)
+        {
+            return _context.Patients.Any(p => p.Passport == patient.Passport);
         }
     }
 }

@@ -1,0 +1,102 @@
+﻿@using RegistrationWebApp.Models
+@model Patient
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="align-self-center">
+
+    <form method="post"
+          asp-antiforgery="true"
+          asp-controller="Register"
+          asp-action="Index"
+          enctype="multipart/form-data"
+          class="w-50">
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Имя</label>
+            <input asp-for="Name" readonly class="form-control" type="text">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SurName" class="form-label">Фамилия</label>
+            <input asp-for="SurName" readonly class="form-control" type="text">
+            <span asp-validation-for="SurName" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Patronymic" class="form-label">Отчество</label>
+            <input asp-for="Patronymic" readonly class="form-control" type="text">
+            <span asp-validation-for="Patronymic" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Passport" class="form-label">Паспорт</label>
+            <input asp-for="Passport" readonly class="form-control" type="text">
+            <span asp-validation-for="Passport" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="DateOfBirth" class="form-label">Дата рождения</label>
+            <input asp-for="DateOfBirth" readonly class="form-control" type="date">
+            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="IsMale" class="form-label">Пол</label>
+            @if (Model.IsMale)
+            {
+                <div>
+                <label asp-for="IsMale" class="form-text">Мужской</label>
+                </div>
+            }
+            else
+            {
+                 <div>
+                <label asp-for="IsMale" class="form-text">Женский</label>
+            </div>
+            }
+        </div>
+        <div class="mb-3">
+            <label asp-for="Address" class="form-label">Адрес</label>
+            <input asp-for="Address" readonly class="form-control" type="text">
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="PhoneNumber" class="form-label">Телефон</label>
+            <input asp-for="PhoneNumber" readonly class="form-control" type="text">
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" readonly class="form-control" type="text">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Job" class="form-label">Место работы</label>
+            <input asp-for="Job" readonly class="form-control" type="text">
+            <span asp-validation-for="Job" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label  class="form-label">Полис</label>
+            <label  class="form-label">@Model.InsurancePolicy.Number</label>
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Страховая компания</label>
+            <label class="form-label">@Model.InsurancePolicy.Company</label>
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Дата окончания полиса</label>
+            <label class="form-label">@Model.InsurancePolicy.EndDate</label>
+        </div>
+
+        @* photo
+        <div class="mb-3">
+        <label asp-for="Photo" class="form-label">Фото</label>
+        <input asp-for="Photo" class="form-control" type="file">
+        <span asp-validation-for="Photo" class="text-danger"></span>
+        </div>
+        *@
+        
+        <br>
+    </form>
+
+</div>
