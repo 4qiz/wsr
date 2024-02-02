@@ -21,5 +21,9 @@ public partial class Hospitalization
 
     public DateTime? EndDate { get; set; }
 
+    public bool IsCanceled { get; set; }
+
+    public string CancelReason { get; set; } = null!;
+
     public virtual MedicalCard MedicalCard { get; set; } = null!;
 }

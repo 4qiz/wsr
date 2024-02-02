@@ -29,11 +29,11 @@ public partial class Patient
 
     public byte[]? Photo { get; set; }
 
-    public int MedicalCardId { get; set; }
+    public int? MedicalCardId { get; set; }
 
     public int InsurancePolicyId { get; set; }
 
     public virtual InsurancePolicy InsurancePolicy { get; set; } = null!;
 
-    public virtual MedicalCard MedicalCard { get; set; } = null!;
+    public virtual MedicalCard? MedicalCard { get; set; }
 }

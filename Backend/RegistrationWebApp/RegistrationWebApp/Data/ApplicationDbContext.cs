@@ -42,7 +42,7 @@ public partial class ApplicationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=LAKE\\SQLEXPRESS;Initial Catalog = MisChampionship;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
+        => optionsBuilder.UseSqlServer("Data Source=LAKE\\SQLEXPRESS; Initial Catalog = MisChampionship; Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -67,6 +67,7 @@ public partial class ApplicationDbContext : DbContext
 
             entity.HasIndex(e => e.HospitalizationCode, "UQ_Hospitalization").IsUnique();
 
+            entity.Property(e => e.CancelReason).HasMaxLength(100);
             entity.Property(e => e.Department).HasMaxLength(100);
             entity.Property(e => e.EndDate).HasColumnType("datetime");
             entity.Property(e => e.Goal).HasMaxLength(500);
@@ -102,6 +103,8 @@ public partial class ApplicationDbContext : DbContext
         {
             entity.ToTable("Patient");
 
+            entity.HasIndex(e => e.Passport, "IX_PatientPassport").IsUnique();
+
             entity.HasIndex(e => e.MedicalCardId, "UQ_MedicalCardId").IsUnique();
 
             entity.HasIndex(e => e.InsurancePolicyId, "UQ_Patient").IsUnique();
@@ -126,7 +129,6 @@ public partial class ApplicationDbContext : DbContext
 
             entity.HasOne(d => d.MedicalCard).WithOne(p => p.Patient)
                 .HasForeignKey<Patient>(d => d.MedicalCardId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Patient_MedicalCard");
         });
 
