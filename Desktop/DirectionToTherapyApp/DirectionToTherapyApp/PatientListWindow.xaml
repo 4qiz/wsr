@@ -1,0 +1,64 @@
+﻿<Window x:Class="DirectionToTherapyApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DirectionToTherapyApp"
+        mc:Ignorable="d"
+        Title="Пациенты" Height="720" Width="1280">
+
+    <Window.Resources>
+
+    </Window.Resources>
+
+    <Grid>
+        <!--list of patients-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Выберите пациента" TextAlignment="Center"
+                   FontSize="28"/>
+        <Button Content="Открыть"
+        Click="OpenPatientWindowButton_Click"/>
+        
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Поиск по номеру мед карты"/>
+            <TextBox Text=""/>
+        </StackPanel>
+        
+        <ListView Name="patientsListView" 
+                  ItemsSource="{Binding Patients}" 
+                  FontSize="20"
+                  Grid.Row="2">
+
+            <ListView.View>
+                <GridView >
+                    <GridViewColumn DisplayMemberBinding="{Binding EndDate, StringFormat=d, ConverterCulture='ru-ru'}" 
+                                    Header="Номер Мед карты"
+                                    Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding FirstName}" 
+                                    Header="Имя"
+                                    Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Location}" 
+                                    Header="Фамилия"
+                                    Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding StartDate, StringFormat=d, ConverterCulture='ru-ru'}" 
+                                    Header="Отчество"
+                                    Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding StartDate, StringFormat=d, ConverterCulture='ru-ru'}" 
+                                    Header="Дата рождения"/>
+                    <GridViewColumn Header="Просмотреть">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Открыть"
+                                        Click="OpenPatientWindowButton_Click"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
