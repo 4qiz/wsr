@@ -5,6 +5,7 @@
 *@
 @{
 }
+    <h2 class="text-center">Регистaция пациента</h2>
 <div class="align-self-center">
 
     @if (!string.IsNullOrEmpty(ViewBag.URL))
@@ -25,6 +26,24 @@
           class="w-50">
 
         <div  asp-validation-summary="All"></div>
+
+        @if (!string.IsNullOrEmpty(ViewBag.URL))
+        {
+            <div class="mb-3">
+                <label asp-for="Photo" class="form-label">Фото</label>
+                <img class="img-fluid rounded" src="data:image/jpeg;base64,@Convert.ToBase64String(Model?.Photo)" />
+            </div>
+        }
+        else
+        {
+        <div class="mb-3">
+            <label asp-for="Photo" class="form-label">Фото</label>
+            <input asp-for="Photo" class="form-control" type="file" name="image" id="imageInput">
+            <span asp-validation-for="Photo" class="text-danger"></span>
+        </div>
+            
+        }
+
 
         <div class="mb-3">
             <label asp-for="Name" class="form-label">Имя</label>

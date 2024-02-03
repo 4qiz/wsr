@@ -15,6 +15,23 @@
           class="w-50">
 
         <div class="mb-3">
+            <label asp-for="Photo" class="form-label">Фото</label>
+            <img class="img-fluid rounded" src="data:image/jpeg;base64,@Convert.ToBase64String(Model?.Photo)" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="MedicalCard.MedicalCardId" class="form-label">Номер Мед карты</label>
+            <input asp-for="MedicalCard.MedicalCardId" readonly class="form-control" type="text">
+            <span asp-validation-for="MedicalCard.MedicalCardId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="MedicalCard.MedicalCardStartDate" class="form-label">Дата выдaчи мед карты</label>
+            <input asp-for="MedicalCard.MedicalCardStartDate" readonly class="form-control" type="date">
+            <span asp-validation-for="MedicalCard.MedicalCardStartDate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
             <label asp-for="Name" class="form-label">Имя</label>
             <input asp-for="Name" readonly class="form-control" type="text">
             <span asp-validation-for="Name" class="text-danger"></span>

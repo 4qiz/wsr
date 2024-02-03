@@ -3,10 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using RegistrationWebApp.Data;
 using RegistrationWebApp.Models;
 using System.Drawing;
-using ZXing.QrCode;
+using System.Reflection.Metadata;
 using ZXing;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using ZXing.QrCode;
 
 namespace RegistrationWebApp.Controllers
 {
@@ -26,7 +25,9 @@ namespace RegistrationWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(Patient patient)
+        public IActionResult Index(
+            Patient patient,
+            IFormFile Image)
         {
             if (!ModelState.IsValid)
             {
@@ -36,12 +37,30 @@ namespace RegistrationWebApp.Controllers
             {
                 return BadRequest("Пациент уже существует");
             }
+
+            // adding image 
+
+            if (Image.Length > 0 && Image.Length < 1000000)
+            {
+            //Convert Image to byte and save to database
+                byte[] imageBytes = null;
+                using (var fs1 = Image.OpenReadStream())
+                using (var ms1 = new MemoryStream())
+                {
+                    fs1.CopyTo(ms1);
+                    imageBytes = ms1.ToArray();
+                }
+                patient.Photo = imageBytes;
+            }
+
+            // adding med card to patient 
             var medicalCard = new MedicalCard() { MedicalCardStartDate = DateTime.Now };
             _context.Add(medicalCard);
             patient.MedicalCard = medicalCard;
 
             _context.Add(patient);
             _context.SaveChanges();
+            /////
             var newPatient = _context.Patients.FirstOrDefault(p => p.Passport == patient.Passport);
 
             var writer = new QRCodeWriter();
@@ -60,17 +79,20 @@ namespace RegistrationWebApp.Controllers
             result.Save(webRootPath + "\\Images\\Qrcode.png");
             ViewBag.URL = "\\Images\\Qrcode.png";
 
+            ////
+
+
             return View(patient);
         }
 
-        public async Task<IActionResult> Detail(Patient patient)
+        public async Task<IActionResult> Detail(MedicalCard medicalCard)
         {
-            //костыль, тк иклуд теряется при передаче
-            var patientWithPolicy = await _context.Patients.Include(i=>i.InsurancePolicy).FirstOrDefaultAsync(p=>p.PatientId == patient.PatientId);
-            if (patient is null)
+            if (medicalCard is null)
             {
                 return BadRequest("не найден пациент по qr коду");
             }
+            //костыль, тк иклуд теряется при передаче
+            var patientWithPolicy = await _context.Patients.Include(i => i.InsurancePolicy).Include(m => m.MedicalCard).FirstOrDefaultAsync(p => p.MedicalCardId == medicalCard.MedicalCardId);
             return View(patientWithPolicy);
         }
 

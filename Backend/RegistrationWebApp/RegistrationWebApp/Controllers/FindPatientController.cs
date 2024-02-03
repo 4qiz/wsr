@@ -41,7 +41,7 @@ namespace RegistrationWebApp.Controllers
             {
                 file.CopyToAsync(stream).Wait();
             }
-            string qrCodeValue;
+            string qrCodeMedCard;
             var reader = new BarcodeReaderGeneric();
             Bitmap image = (Bitmap)Image.FromFile(filePath);
             using (image)
@@ -53,16 +53,16 @@ namespace RegistrationWebApp.Controllers
                     ViewBag.Text = "Не удалось считать QR code";
                     return View();
                 }
-                ViewBag.Text = qrCodeValue =  res?.Text ?? "Не удалось считать QR code";
+                ViewBag.Text = qrCodeMedCard =  res?.Text ?? "Не удалось считать QR code";
             }
-            var patient = _context.Patients.Include(i=>i.InsurancePolicy).FirstOrDefault(p => p.MedicalCardId.ToString() == qrCodeValue);
-            if (patient == null)
+            var medicalCard = _context.MedicalCards.FirstOrDefault(p => p.MedicalCardId.ToString() == qrCodeMedCard);
+            if (medicalCard == null)
             {
-                ViewBag.Text = $"Не удалось найти пациента с номером мед карты: {qrCodeValue}";
+                ViewBag.Text = $"Не удалось найти пациента с номером мед карты: {qrCodeMedCard}";
                 return View();
             }
 
-            return RedirectToAction("Detail", "Register", patient);
+            return RedirectToAction("Detail", "Register", medicalCard);
         }
     }
 }
