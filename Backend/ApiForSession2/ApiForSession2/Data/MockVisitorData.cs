@@ -8,17 +8,15 @@ namespace ApiForSession2.Data
         {
             var visitors = new List<Visitor>
             {
-                // Add more mock data here
-                new Visitor { PersonCode = "123", PersonRole = "Сотрудник", LastSecurityPointNumber = 0, LastSecurityPointDirection = "in", LastSecurityPointTime = new DateTime(2023, 1, 1, 8, 30, 0) },
-                new Visitor { PersonCode = "456", PersonRole = "Клиент", LastSecurityPointNumber = 1, LastSecurityPointDirection = "out", LastSecurityPointTime = new DateTime(2023, 1, 1, 9, 0, 0) },
-                // Add more mock data here
+                new() { PersonCode = 1, PersonRole = "Сотрудник", LastSecurityPointNumber = 0, LastSecurityPointDirection = "in", LastSecurityPointTime = new DateTime(2024, 2, 4, 9,0,0) },
+                new() { PersonCode = 1, PersonRole = "Сотрудник", LastSecurityPointNumber = 0, LastSecurityPointDirection = "out", LastSecurityPointTime = new DateTime(2024, 2, 4, 9, 30, 0) },
+                new() { PersonCode = 2, PersonRole = "client", LastSecurityPointNumber = 0, LastSecurityPointDirection = "in", LastSecurityPointTime = new DateTime(2024, 2, 4, 9, 30, 0) },
+                new() { PersonCode = 2, PersonRole = "client", LastSecurityPointNumber = 0, LastSecurityPointDirection = "out", LastSecurityPointTime = new DateTime(2024, 2, 4, 10, 0, 0) },
+                new() { PersonCode = 3, PersonRole = "client", LastSecurityPointNumber = 3, LastSecurityPointDirection = "in", LastSecurityPointTime = new DateTime(2024, 2, 4, 10, 30, 0) },
+                new() { PersonCode = 4, PersonRole = "client", LastSecurityPointNumber = 4, LastSecurityPointDirection = "in", LastSecurityPointTime = new DateTime(2024, 2, 4, 10, 30, 0) },
+                new() { PersonCode = 3, PersonRole = "client", LastSecurityPointNumber = 3, LastSecurityPointDirection = "out", LastSecurityPointTime = new DateTime(2024, 2, 4, 10, 30, 0) },
+                new() { PersonCode = 1, PersonRole = "Сотрудник", LastSecurityPointNumber = 22, LastSecurityPointDirection = "in", LastSecurityPointTime = new DateTime(2024, 2, 4, 9, 30, 0) },
             };
-
-            for (int i = 0; i < 22; i++)
-            {
-                visitors.Add(new Visitor { PersonCode = $"789{i}", PersonRole = i % 2 == 0 ? "Сотрудник" : "Клиент", LastSecurityPointNumber = i, LastSecurityPointDirection = "in", LastSecurityPointTime = new DateTime(2023, 1, 1, 8, 30, 0) });
-                visitors.Add(new Visitor { PersonCode = $"789{i}", PersonRole = i % 2 == 0 ? "Сотрудник" : "Клиент", LastSecurityPointNumber = i, LastSecurityPointDirection = "out", LastSecurityPointTime = new DateTime(2023, 1, 1, 9, 0, 0) });
-            }
 
             return visitors;
         }
