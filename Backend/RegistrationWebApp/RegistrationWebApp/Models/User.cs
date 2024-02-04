@@ -19,6 +19,8 @@ public partial class User
 
     public string Email { get; set; } = null!;
 
+    public virtual AdminUser? AdminUser { get; set; }
+
     public virtual Doctor? Doctor { get; set; }
 
     public virtual RegistrationStaff? RegistrationStaff { get; set; }

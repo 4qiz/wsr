@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RegistrationWebApp.Models;
 
-public partial class RegistrationStaff
+public partial class AdminUser
 {
     public int UserId { get; set; }
 

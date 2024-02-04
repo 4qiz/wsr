@@ -33,6 +33,8 @@ public partial class Patient
 
     public int InsurancePolicyId { get; set; }
 
+    public string? PassportIssuedBy { get; set; }
+
     public virtual InsurancePolicy InsurancePolicy { get; set; } = null!;
 
     public virtual MedicalCard? MedicalCard { get; set; }

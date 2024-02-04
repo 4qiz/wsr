@@ -16,6 +16,8 @@ public partial class ApplicationDbContext : DbContext
     {
     }
 
+    public virtual DbSet<AdminUser> AdminUsers { get; set; }
+
     public virtual DbSet<Doctor> Doctors { get; set; }
 
     public virtual DbSet<Hospitalization> Hospitalizations { get; set; }
@@ -42,11 +44,24 @@ public partial class ApplicationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        //=> optionsBuilder.UseSqlServer("Data Source=LAKE\\SQLEXPRESS; Initial Catalog = MisChampionship; Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
-        => optionsBuilder.UseSqlServer("Data Source=PRSERVER\\SQLEXPRESS; Initial Catalog = wsr2402; User ID=wsr2402;Password=wsr2402; Trust Server Certificate=True;");
+        => optionsBuilder.UseSqlServer("Data Source=LAKE\\SQLEXPRESS; Initial Catalog=MisChampionship;Integrated Security=True;Trust Server Certificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AdminUser>(entity =>
+        {
+            entity.HasKey(e => e.UserId);
+
+            entity.ToTable("AdminUser");
+
+            entity.Property(e => e.UserId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.User).WithOne(p => p.AdminUser)
+                .HasForeignKey<AdminUser>(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_AdminUser_User");
+        });
+
         modelBuilder.Entity<Doctor>(entity =>
         {
             entity.HasKey(e => e.DoctorId).HasName("PK_Doctor_1");
@@ -117,6 +132,7 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Passport)
                 .HasMaxLength(10)
                 .IsFixedLength();
+            entity.Property(e => e.PassportIssuedBy).HasMaxLength(100);
             entity.Property(e => e.Patronymic).HasMaxLength(100);
             entity.Property(e => e.PhoneNumber)
                 .HasMaxLength(11)
@@ -140,7 +156,6 @@ public partial class ApplicationDbContext : DbContext
             entity.ToTable("RegistrationStaff");
 
             entity.Property(e => e.UserId).ValueGeneratedNever();
-            entity.Property(e => e.Title).HasMaxLength(10);
 
             entity.HasOne(d => d.User).WithOne(p => p.RegistrationStaff)
                 .HasForeignKey<RegistrationStaff>(d => d.UserId)
@@ -224,6 +239,8 @@ public partial class ApplicationDbContext : DbContext
         modelBuilder.Entity<User>(entity =>
         {
             entity.ToTable("User");
+
+            entity.HasIndex(e => e.Email, "UQ_UserEmail").IsUnique();
 
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.Name).HasMaxLength(100);
