@@ -13,8 +13,6 @@ namespace MapApp
     /// </summary>
     public partial class TrackingPage : Page
     {
-        private Dictionary<int, Ellipse> _markers = new();
-
         private Dictionary<int, WrapPanel> _skuds = new();
 
         List<Visitor> _visitorsList;
@@ -23,11 +21,11 @@ namespace MapApp
         {
             InitializeComponent();
 
-
             for (int i = 0; i < 23; i++)
             {
                 _skuds[i] = (WrapPanel)mapCanvas.Children[i];
             }
+
             var timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(3000);
             timer.Tick += Update;
@@ -49,34 +47,31 @@ namespace MapApp
             {
                 item.Value.Children.Clear();
             }
-            _markers.Clear();
 
             var visitorsInside = _visitorsList
                 .GroupBy(v => v.PersonCode)
                 .Select(group => new
                 {
                     PersonCode = group.Key,
-                    PersonInside = group.Last().LastSecurityPointDirection == "in",
-                    PersonRole = group.Last().PersonRole,
-                    SkudNumber = group.Last().LastSecurityPointNumber
+                    LastVisit = group.Last()
                 })
+                .Where(visitor => visitor.LastVisit.LastSecurityPointDirection == "in")
                 .ToList();
 
             foreach (var visitor in visitorsInside)
             {
-                if (!visitor.PersonInside)
-                    continue;
-                _markers[visitor.PersonCode] = new Ellipse
+                var personRole = visitor.LastVisit.PersonRole;
+                var skudNumber = visitor.LastVisit.LastSecurityPointNumber;
+                var markerColor = personRole == "Сотрудник" ? Brushes.Blue : Brushes.Green;
+
+                _skuds[skudNumber].Children.Add(new Ellipse
                 {
                     Width = 10,
                     Height = 10,
-                    Fill = visitor.PersonRole == "Сотрудник" ? Brushes.Blue : Brushes.Green,
+                    Fill = markerColor,
                     Margin = new Thickness(2),
-                };
-
-                _skuds[visitor.SkudNumber].Children.Add(_markers[visitor.PersonCode]);
+                });
             }
-            
         }
     }
 }
