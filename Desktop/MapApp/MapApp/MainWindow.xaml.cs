@@ -26,5 +26,10 @@ namespace MapApp
         {
             ContentFrame.Content = new TrackingPage();
         }
+
+        private void btn2_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Content = new BedsPage();
+        }
     }
 }

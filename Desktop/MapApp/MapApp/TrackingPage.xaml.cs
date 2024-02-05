@@ -32,13 +32,19 @@ namespace MapApp
             timer.Start();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            _visitorsList = await MockVisitorData.GetVisitors();
-        }
 
-        private void Update(object? sender, EventArgs e)
+
+        private async void Update(object? sender, EventArgs e)
         {
+            try
+            {
+                _visitorsList = await MockVisitorData.GetVisitors();
+
+            }
+            catch (Exception)
+            {
+                return;
+            }
             if (_visitorsList == null)
             {
                 return;
