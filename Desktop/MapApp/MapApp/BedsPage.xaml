@@ -11,30 +11,118 @@
 
 
     <StackPanel>
-        
+
         <Expander Header="ЗАНЯТОСТЬ КОЕЧНОГО ФОНДА">
             <Canvas>
-                
-            <Viewbox Width="900" Height="600">
-            <Image Source="/Images/map2.png" Stretch="Uniform"/>
-        </Viewbox>
-        <Canvas x:Name="room103Canvas" Width="132" HorizontalAlignment="Center" Height="180" VerticalAlignment="Top" Canvas.Left="67" Canvas.Top="189">
-            <CheckBox x:Name="n103ACheckBox" Content="А" IsEnabled="False" Canvas.Left="13" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <CheckBox x:Name="n103BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="12" Canvas.Top="62" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <CheckBox x:Name="n103VCheckBox" Content="В" IsEnabled="False" Canvas.Left="12" Canvas.Top="111" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <CheckBox x:Name="n103GCheckBox" Content="Г" IsEnabled="False" Canvas.Left="13" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <CheckBox x:Name="n103DCheckBox" Content="Д" IsEnabled="False" Canvas.Left="95" Canvas.Top="62" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <CheckBox x:Name="n103ECheckBox" Content="Е" IsEnabled="False" Canvas.Left="95" Canvas.Top="111" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        </Canvas>
 
-        <Canvas x:Name="room102Canvas" Width="132" HorizontalAlignment="Center" Height="180" VerticalAlignment="Top" Canvas.Left="67" Canvas.Top="374">
-            <CheckBox x:Name="n102ACheckBox" Content="A" IsEnabled="False" Canvas.Left="14" Canvas.Top="5" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <CheckBox x:Name="n102BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="14" Canvas.Top="45" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <CheckBox x:Name="n102VCheckBox" Content="В" IsEnabled="False" Canvas.Left="14" Canvas.Top="90" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <CheckBox x:Name="n102GCheckBox" Content="Г" IsEnabled="False" Canvas.Left="95" Canvas.Top="4" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <CheckBox x:Name="n102DCheckBox" Content="Д" IsEnabled="False" Canvas.Left="95" Canvas.Top="90" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        </Canvas>
-
+                <Viewbox Width="900" Height="600">
+                    <Image Source="/Images/map2.png" Stretch="Uniform"/>
+                </Viewbox>
+                <Canvas x:Name="room101Canvas" Width="132" HorizontalAlignment="Center" Height="112" VerticalAlignment="Top" Canvas.Left="67" Canvas.Top="488">
+                    <CheckBox x:Name="n101ACheckBox" Content="A" IsEnabled="False" Canvas.Left="14" Canvas.Top="5" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n101BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="14" Canvas.Top="45" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n101VCheckBox" Content="В" IsEnabled="False" Canvas.Left="14" Canvas.Top="90" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n101GCheckBox" Content="Г" IsEnabled="False" Canvas.Left="95" Canvas.Top="4" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n101DCheckBox" Content="Д" IsEnabled="False" Canvas.Left="95" Canvas.Top="90" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                </Canvas>
+                <Canvas x:Name="room102Canvas" Width="132" HorizontalAlignment="Center" Height="114" VerticalAlignment="Top" Canvas.Left="67" Canvas.Top="374">
+                    <CheckBox x:Name="n102ACheckBox" Content="A" IsEnabled="False" Canvas.Left="14" Canvas.Top="5" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n102BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="14" Canvas.Top="45" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n102VCheckBox" Content="В" IsEnabled="False" Canvas.Left="14" Canvas.Top="90" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n102GCheckBox" Content="Г" IsEnabled="False" Canvas.Left="95" Canvas.Top="4" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n102DCheckBox" Content="Д" IsEnabled="False" Canvas.Left="95" Canvas.Top="90" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                </Canvas>
+                <Canvas x:Name="room103Canvas" Width="132" HorizontalAlignment="Center" Height="180" VerticalAlignment="Top" Canvas.Left="67" Canvas.Top="189">
+                    <CheckBox x:Name="n103ACheckBox" Content="А" IsEnabled="False" Canvas.Left="13" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="n103BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="12" Canvas.Top="62" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="n103VCheckBox" Content="В" IsEnabled="False" Canvas.Left="12" Canvas.Top="111" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="n103GCheckBox" Content="Г" IsEnabled="False" Canvas.Left="13" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="n103DCheckBox" Content="Д" IsEnabled="False" Canvas.Left="95" Canvas.Top="62" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="n103ECheckBox" Content="Е" IsEnabled="False" Canvas.Left="95" Canvas.Top="111" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Canvas>
+                <Canvas x:Name="room104Canvas" Width="132" HorizontalAlignment="Center" Height="128" VerticalAlignment="Top" Canvas.Left="67">
+                    <CheckBox x:Name="n104ACheckBox" Content="А" IsEnabled="False" Canvas.Left="16" Canvas.Top="93" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n104BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="17" Canvas.Top="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="n104VCheckBox" Content="В" IsEnabled="False" Canvas.Left="90" Canvas.Top="18" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n104GCheckBox" Content="Г" IsEnabled="False" Canvas.Left="90" Canvas.Top="93" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Canvas>
+                <Canvas x:Name="room105Canvas" Width="129" HorizontalAlignment="Left" Height="128" VerticalAlignment="Center" Canvas.Left="199">
+                    <CheckBox x:Name="n105ACheckBox" Content="А" IsEnabled="False" Canvas.Left="16" Canvas.Top="93" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n105BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="17" Canvas.Top="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="n105VCheckBox" Content="В" IsEnabled="False" Canvas.Left="90" Canvas.Top="18" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n105GCheckBox" Content="Г" IsEnabled="False" Canvas.Left="90" Canvas.Top="93" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Canvas>
+                <Canvas x:Name="room106Canvas" Width="124" HorizontalAlignment="Left" Height="128" VerticalAlignment="Center" Canvas.Left="333">
+                    <CheckBox x:Name="n106ACheckBox" Content="А" IsEnabled="False" Canvas.Left="16" Canvas.Top="93" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n106BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="17" Canvas.Top="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="n106VCheckBox" Content="В" IsEnabled="False" Canvas.Left="90" Canvas.Top="18" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n106GCheckBox" Content="Г" IsEnabled="False" Canvas.Left="90" Canvas.Top="93" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Canvas>
+                <Canvas    x:Name="room107Canvas" Width="129" HorizontalAlignment="Left" Height="128" VerticalAlignment="Center" Canvas.Left="457">
+                    <CheckBox x:Name="n107ACheckBox" Content="А" IsEnabled="False" Canvas.Left="16" Canvas.Top="93" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n107BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="17" Canvas.Top="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="n107VCheckBox" Content="В" IsEnabled="False" Canvas.Left="90" Canvas.Top="18" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n107GCheckBox" Content="Г" IsEnabled="False" Canvas.Left="90" Canvas.Top="93" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Canvas>
+                <Canvas    x:Name="room108Canvas" Width="81" HorizontalAlignment="Left" Height="128" VerticalAlignment="Center" Canvas.Left="586">
+                    <CheckBox x:Name="n108ACheckBox" Content="А" IsEnabled="False" Canvas.Left="43" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n108BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="44" Canvas.Top="56" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n108VCheckBox" Content="В" IsEnabled="False" Canvas.Left="43" Canvas.Top="103" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Canvas>
+                <Canvas    x:Name="room109Canvas" Width="81" HorizontalAlignment="Left" Height="128" VerticalAlignment="Center" Canvas.Left="667">
+                    <CheckBox x:Name="n109ACheckBox" Content="А" IsEnabled="False" Canvas.Left="43" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n109BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="44" Canvas.Top="56" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n109VCheckBox" Content="В" IsEnabled="False" Canvas.Left="43" Canvas.Top="103" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Canvas>
+                <Canvas    x:Name="room110Canvas" Width="80" HorizontalAlignment="Left" Height="128" VerticalAlignment="Center" Canvas.Left="753">
+                    <CheckBox x:Name="n110ACheckBox" Content="А" IsEnabled="False" Canvas.Left="43" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n110BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="44" Canvas.Top="56" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n110VCheckBox" Content="В" IsEnabled="False" Canvas.Left="43" Canvas.Top="103" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Canvas>
+                <Canvas    x:Name="room111Canvas" Width="112" HorizontalAlignment="Left" Height="119" VerticalAlignment="Center" Canvas.Left="721" Canvas.Top="189">
+                    <CheckBox x:Name="n111ACheckBox" Content="А" IsEnabled="False" Canvas.Left="74" Canvas.Top="17" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n111BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="77" Canvas.Top="92" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n111VCheckBox" Content="В" IsEnabled="False" Canvas.Left="5" Canvas.Top="93" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n111GCheckBox" Content="Г" IsEnabled="False" Canvas.Left="5" Canvas.Top="17" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Canvas>
+                <Canvas    x:Name="room112Canvas" Width="114" HorizontalAlignment="Left" Height="119" VerticalAlignment="Center" Canvas.Left="607" Canvas.Top="189">
+                    <CheckBox x:Name="n112ACheckBox" Content="А" IsEnabled="False" Canvas.Left="74" Canvas.Top="19" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n112BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="77" Canvas.Top="94" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n112VCheckBox" Content="В" IsEnabled="False" Canvas.Left="10" Canvas.Top="94" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="n112GCheckBox" Content="Г" IsEnabled="False" Canvas.Left="10" Canvas.Top="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Canvas>
+                <Canvas    x:Name="room113Canvas" Width="110" HorizontalAlignment="Left" Height="119" VerticalAlignment="Center" Canvas.Left="497" Canvas.Top="189">
+                    <CheckBox x:Name="n113ACheckBox" Content="А" IsEnabled="False" Canvas.Left="74" Canvas.Top="19" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n113BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="77" Canvas.Top="94" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n113VCheckBox" Content="В" IsEnabled="False" Canvas.Left="10" Canvas.Top="94" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="n113GCheckBox" Content="Г" IsEnabled="False" Canvas.Left="10" Canvas.Top="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Canvas>
+                <Canvas    x:Name="room114Canvas" Width="115" HorizontalAlignment="Left" Height="119" VerticalAlignment="Center" Canvas.Left="382" Canvas.Top="189">
+                    <CheckBox x:Name="n114ACheckBox" Content="А" IsEnabled="False" Canvas.Left="74" Canvas.Top="19" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n114BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="77" Canvas.Top="94" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n114VCheckBox" Content="В" IsEnabled="False" Canvas.Left="10" Canvas.Top="94" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="n114GCheckBox" Content="Г" IsEnabled="False" Canvas.Left="10" Canvas.Top="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Canvas>
+                <Canvas    x:Name="room115Canvas" Width="115" HorizontalAlignment="Left" Height="180" VerticalAlignment="Center" Canvas.Left="264" Canvas.Top="189">
+                    <CheckBox x:Name="n115ACheckBox" Content="А" IsEnabled="False" Canvas.Left="80" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="n115BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="79" Canvas.Top="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n115VCheckBox" Content="В" IsEnabled="False" Canvas.Left="78" Canvas.Top="110" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n115GCheckBox" Content="Г" IsEnabled="False" Canvas.Left="79" Canvas.Top="155" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n115DCheckBox" Content="Д" IsEnabled="False" Canvas.Left="12" Canvas.Top="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n115ECheckBox" Content="Е" IsEnabled="False" Canvas.Left="12" Canvas.Top="110" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Canvas>
+                <Canvas    x:Name="room116Canvas" Width="115" HorizontalAlignment="Center" Height="74" VerticalAlignment="Top" Canvas.Left="264" Canvas.Top="374">
+                    <CheckBox x:Name="n116ACheckBox" Content="А" IsEnabled="False" Canvas.Left="80" Canvas.Top="4" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n116BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="79" Canvas.Top="54" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                </Canvas>
+                <Canvas    x:Name="room117Canvas" Width="115" HorizontalAlignment="Center" Height="74" VerticalAlignment="Top" Canvas.Left="264" Canvas.Top="448">
+                    <CheckBox x:Name="n117ACheckBox" Content="А" IsEnabled="False" Canvas.Left="80" Canvas.Top="4" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n117BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="79" Canvas.Top="54" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                </Canvas>
+                <Canvas    x:Name="room118Canvas" Width="115" HorizontalAlignment="Center" Height="78" VerticalAlignment="Top" Canvas.Left="264" Canvas.Top="522">
+                    <CheckBox x:Name="n118ACheckBox" Content="А" IsEnabled="False" Canvas.Left="80" Canvas.Top="4" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="n118BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="79" Canvas.Top="54" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                </Canvas>
             </Canvas>
         </Expander>
     </StackPanel>

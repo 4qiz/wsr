@@ -32,51 +32,49 @@ namespace MapApp
             timer.Start();
         }
 
-
-
         private async void Update(object? sender, EventArgs e)
         {
             try
             {
                 _visitorsList = await MockVisitorData.GetVisitors();
 
+                if (_visitorsList == null)
+                {
+                    return;
+                }
+                foreach (var item in _skuds)
+                {
+                    item.Value.Children.Clear();
+                }
+
+                var visitorsInside = _visitorsList
+                    .GroupBy(v => v.PersonCode)
+                    .Select(group => new
+                    {
+                        PersonCode = group.Key,
+                        LastVisit = group.Last()
+                    })
+                    .Where(visitor => visitor.LastVisit.LastSecurityPointDirection == "in")
+                    .ToList();
+
+                foreach (var visitor in visitorsInside)
+                {
+                    var personRole = visitor.LastVisit.PersonRole;
+                    var skudNumber = visitor.LastVisit.LastSecurityPointNumber;
+                    var markerColor = personRole == "Сотрудник" ? Brushes.Blue : Brushes.Green;
+
+                    _skuds[skudNumber].Children.Add(new Ellipse
+                    {
+                        Width = 10,
+                        Height = 10,
+                        Fill = markerColor,
+                        Margin = new Thickness(2),
+                    });
+                }
             }
             catch (Exception)
             {
                 return;
-            }
-            if (_visitorsList == null)
-            {
-                return;
-            }
-            foreach (var item in _skuds)
-            {
-                item.Value.Children.Clear();
-            }
-
-            var visitorsInside = _visitorsList
-                .GroupBy(v => v.PersonCode)
-                .Select(group => new
-                {
-                    PersonCode = group.Key,
-                    LastVisit = group.Last()
-                })
-                .Where(visitor => visitor.LastVisit.LastSecurityPointDirection == "in")
-                .ToList();
-
-            foreach (var visitor in visitorsInside)
-            {
-                var personRole = visitor.LastVisit.PersonRole;
-                var skudNumber = visitor.LastVisit.LastSecurityPointNumber;
-                var markerColor = personRole == "Сотрудник" ? Brushes.Blue : Brushes.Green;
-
-                _skuds[skudNumber].Children.Add(new Ellipse
-                {
-                    Width = 10,
-                    Height = 10,
-                    Fill = markerColor,
-                    Margin = new Thickness(2),
-                });
             }
         }
     }
