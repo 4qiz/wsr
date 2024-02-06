@@ -10,12 +10,16 @@
 
 
 
-    <Canvas>
-        <Viewbox Width="900" Height="600">
+    <StackPanel>
+        
+        <Expander Header="ЗАНЯТОСТЬ КОЕЧНОГО ФОНДА">
+            <Canvas>
+                
+            <Viewbox Width="900" Height="600">
             <Image Source="/Images/map2.png" Stretch="Uniform"/>
         </Viewbox>
         <Canvas x:Name="room103Canvas" Width="132" HorizontalAlignment="Center" Height="180" VerticalAlignment="Top" Canvas.Left="67" Canvas.Top="189">
-            <CheckBox x:Name="n103ACheckBox" Content="A" IsEnabled="False" Canvas.Left="13" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <CheckBox x:Name="n103ACheckBox" Content="А" IsEnabled="False" Canvas.Left="13" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <CheckBox x:Name="n103BCheckBox" Content="Б" IsEnabled="False" Canvas.Left="12" Canvas.Top="62" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <CheckBox x:Name="n103VCheckBox" Content="В" IsEnabled="False" Canvas.Left="12" Canvas.Top="111" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <CheckBox x:Name="n103GCheckBox" Content="Г" IsEnabled="False" Canvas.Left="13" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -31,6 +35,8 @@
             <CheckBox x:Name="n102DCheckBox" Content="Д" IsEnabled="False" Canvas.Left="95" Canvas.Top="90" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         </Canvas>
 
-    </Canvas>
+            </Canvas>
+        </Expander>
+    </StackPanel>
 
 </Page>
