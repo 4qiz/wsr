@@ -1,5 +1,5 @@
-﻿@using RegistrationWebApp.Models
-@model Patient
+﻿@using RegistrationWebApp.DTO
+@model HospitalizationInfoDto
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -9,30 +9,23 @@
 
     <form method="post"
           asp-antiforgery="true"
-          asp-controller="Register"
-          asp-action="Index"
+          asp-controller="Hospitalization"
+          asp-action="Detail"
           enctype="multipart/form-data"
           class="w-50">
 
-        @if(Model.Photo != null)
+      @*   @if (Model?.Photo != null)
         {
-            
-        <div class="mb-3">
-            <label asp-for="Photo" class="form-label">Фото</label>
-            <img class="img-fluid rounded" src="data:image/jpeg;base64,@Convert.ToBase64String(Model?.Photo)" />
-        </div>
-        }
+            <div class="mb-3">
+                <label asp-for="Photo" class="form-label">Фото</label>
+                <img class="img-fluid rounded" src="data:image/jpeg;base64,@Convert.ToBase64String(Model?.Photo)" />
+            </div>
+        } *@
 
         <div class="mb-3">
-            <label asp-for="MedicalCard.MedicalCardId" class="form-label">Номер Мед карты</label>
-            <input asp-for="MedicalCard.MedicalCardId" readonly class="form-control" type="text">
-            <span asp-validation-for="MedicalCard.MedicalCardId" class="text-danger"></span>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="MedicalCard.MedicalCardStartDate" class="form-label">Дата выдaчи мед карты</label>
-            <input asp-for="MedicalCard.MedicalCardStartDate" readonly class="form-control" type="date">
-            <span asp-validation-for="MedicalCard.MedicalCardStartDate" class="text-danger"></span>
+            <label asp-for="MedicalCardId" class="form-label">Номер Мед карты</label>
+            <input asp-for="MedicalCardId" readonly class="form-control" type="text">
+            <span asp-validation-for="MedicalCardId" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
@@ -65,14 +58,14 @@
             @if (Model.IsMale)
             {
                 <div>
-                <label asp-for="IsMale" class="form-text">Мужской</label>
+                    <label asp-for="IsMale" class="form-text">Мужской</label>
                 </div>
             }
             else
             {
-                 <div>
-                <label asp-for="IsMale" class="form-text">Женский</label>
-            </div>
+                <div>
+                    <label asp-for="IsMale" class="form-text">Женский</label>
+                </div>
             }
         </div>
         <div class="mb-3">
@@ -97,26 +90,54 @@
         </div>
 
         <div class="mb-3">
-            <label  class="form-label">Полис</label>
-            <label  class="form-label">@Model.InsurancePolicy.Number</label>
+            <label class="form-label">Полис</label>
+            <label class="form-label">@Model.PolicyNumber</label>
         </div>
         <div class="mb-3">
-            <label  class="form-label">Страховая компания</label>
-            <label class="form-label">@Model.InsurancePolicy.Company</label>
+            <label class="form-label">Страховая компания</label>
+            <label class="form-label">@Model.PolicyCompany</label>
         </div>
         <div class="mb-3">
-            <label  class="form-label">Дата окончания полиса</label>
-            <label class="form-label">@Model.InsurancePolicy.EndDate</label>
+            <label class="form-label">Дата окончания полиса</label>
+            <label class="form-label">@Model.PolicyEndDate</label>
         </div>
 
-        @* photo
         <div class="mb-3">
-        <label asp-for="Photo" class="form-label">Фото</label>
-        <input asp-for="Photo" class="form-control" type="file">
-        <span asp-validation-for="Photo" class="text-danger"></span>
+            <label class="form-label">Стоимость госпитализации</label>
+            <label class="form-label">@Model.Price</label>
         </div>
-        *@
-        
+
+        <div class="mb-3">
+            <label asp-for="Goal" class="form-label">Цель госпитализации</label>
+            <input asp-for="Goal" readonly class="form-control" type="text">
+            <span asp-validation-for="Goal" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="HospitalRoom" class="form-label">номер отделения</label>
+            <input asp-for="HospitalRoom" readonly class="form-control" type="text">
+            <span asp-validation-for="HospitalRoom" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="BedNumber" class="form-label">номер койки</label>
+            <input asp-for="BedNumber" readonly class="form-control" type="text">
+            <span asp-validation-for="BedNumber" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Дата начала госпитализации</label>
+            <label class="form-label">@Model.StartDate</label>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Дата окончания госпитализации</label>
+            <label class="form-label">@Model.EndDate</label>
+        </div>
+        @if (Model.IsCanceled)
+        {
+            <div class="mb-3">
+                <label class="form-label">Причина отказа от госпитализации</label>
+                <label class="form-label">@Model.CancelReason</label>
+            </div>
+        }
         <br>
     </form>
 

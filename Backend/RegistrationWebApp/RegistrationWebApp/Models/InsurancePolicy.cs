@@ -13,5 +13,5 @@ public partial class InsurancePolicy
 
     public string Company { get; set; } = null!;
 
-    public virtual Patient? Patient { get; set; }
+    public virtual ICollection<Patient> Patients { get; set; } = new List<Patient>();
 }

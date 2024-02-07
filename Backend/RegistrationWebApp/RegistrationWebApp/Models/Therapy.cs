@@ -13,7 +13,7 @@ public partial class Therapy
 
     public decimal Price { get; set; }
 
-    public string? HospitalizationCode { get; set; }
+    public int? HospitalizationCode { get; set; }
 
     public string? Recomendations { get; set; }
 

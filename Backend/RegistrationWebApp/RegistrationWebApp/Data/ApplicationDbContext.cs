@@ -44,7 +44,7 @@ public partial class ApplicationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=LAKE\\SQLEXPRESS; Initial Catalog=MisChampionship;Integrated Security=True;Trust Server Certificate=True;");
+        => optionsBuilder.UseSqlServer("Data Source=sql.bsite.net\\MSSQL2016; Initial Catalog = lake_wsr; User ID=lake_wsr;Password=567.tyu.;Trust Server Certificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -81,13 +81,15 @@ public partial class ApplicationDbContext : DbContext
         {
             entity.ToTable("Hospitalization");
 
-            entity.HasIndex(e => e.HospitalizationCode, "UQ_Hospitalization").IsUnique();
+            entity.HasIndex(e => e.HospitalizationId, "IX_Hospitalization");
 
+            entity.Property(e => e.Bed)
+                .HasMaxLength(1)
+                .IsUnicode(false)
+                .IsFixedLength();
             entity.Property(e => e.CancelReason).HasMaxLength(100);
-            entity.Property(e => e.Department).HasMaxLength(100);
             entity.Property(e => e.EndDate).HasColumnType("datetime");
             entity.Property(e => e.Goal).HasMaxLength(500);
-            entity.Property(e => e.HospitalizationCode).HasMaxLength(50);
             entity.Property(e => e.Price).HasColumnType("decimal(15, 2)");
             entity.Property(e => e.StartDate).HasColumnType("datetime");
 
@@ -119,11 +121,7 @@ public partial class ApplicationDbContext : DbContext
         {
             entity.ToTable("Patient");
 
-            entity.HasIndex(e => e.Passport, "IX_PatientPassport").IsUnique();
-
-            entity.HasIndex(e => e.MedicalCardId, "UQ_MedicalCardId").IsUnique();
-
-            entity.HasIndex(e => e.InsurancePolicyId, "UQ_Patient").IsUnique();
+            entity.HasIndex(e => e.MedicalCardId, "UQ_MedicalCard").IsUnique();
 
             entity.Property(e => e.Address).HasMaxLength(100);
             entity.Property(e => e.Email).HasMaxLength(100);
@@ -139,8 +137,8 @@ public partial class ApplicationDbContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.SurName).HasMaxLength(100);
 
-            entity.HasOne(d => d.InsurancePolicy).WithOne(p => p.Patient)
-                .HasForeignKey<Patient>(d => d.InsurancePolicyId)
+            entity.HasOne(d => d.InsurancePolicy).WithMany(p => p.Patients)
+                .HasForeignKey(d => d.InsurancePolicyId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Patient_InsurancePolicy");
 
@@ -174,11 +172,12 @@ public partial class ApplicationDbContext : DbContext
         {
             entity.ToTable("Therapy");
 
+            entity.HasIndex(e => e.HospitalizationCode, "UQ_HospitalizationCode").IsUnique();
+
             entity.Property(e => e.TherapyId).ValueGeneratedNever();
             entity.Property(e => e.Date).HasColumnType("datetime");
             entity.Property(e => e.Diagnosis).HasMaxLength(1000);
             entity.Property(e => e.Direction).HasMaxLength(50);
-            entity.Property(e => e.HospitalizationCode).HasMaxLength(50);
             entity.Property(e => e.Price).HasColumnType("decimal(15, 2)");
             entity.Property(e => e.Recomendations).HasMaxLength(1000);
             entity.Property(e => e.Title).HasMaxLength(100);
@@ -231,16 +230,12 @@ public partial class ApplicationDbContext : DbContext
 
             entity.ToTable("TherapyType");
 
-            entity.HasIndex(e => e.Title, "UQ_TherapyType").IsUnique();
-
             entity.Property(e => e.Title).HasMaxLength(100);
         });
 
         modelBuilder.Entity<User>(entity =>
         {
             entity.ToTable("User");
-
-            entity.HasIndex(e => e.Email, "UQ_UserEmail").IsUnique();
 
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.Name).HasMaxLength(100);

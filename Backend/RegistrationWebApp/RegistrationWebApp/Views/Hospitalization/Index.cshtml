@@ -6,9 +6,12 @@
     <h1 class="accordion-header">«Госпитализация ПАЦИЕНТОВ»</h1>
     <a class="btn btn-outline-primary m-4"
        asp-controller="Register"
-       asp-action="Index">Госпитализация пациента</a>
-
-    <a class="btn btn-outline-primary m-4"
-       asp-controller="FindPatient"
-       asp-action="Index">Поиск пациента</a>
+       asp-action="Index">Создать госпитализацию</a>
+    <br>
+    <h1>Поиск госпитализации</h1>
+    <form method="post" asp-controller="Hospitalization" asp-action="Detail">
+        <label >Введите код на госпитализацию, полученный у терапевта</label>
+        <input id="hospitalizationCode" name="hospitalizationCode" type="text" />
+        <button type="submit" class="btn btn-primary">Поиск</button>
+    </form>
 </div>
