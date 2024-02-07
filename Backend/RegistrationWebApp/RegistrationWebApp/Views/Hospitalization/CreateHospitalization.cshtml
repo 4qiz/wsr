@@ -1,0 +1,60 @@
+﻿@model Hospitalization
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="align-self-center">
+    <form method="post"
+          asp-antiforgery="true"
+          asp-controller="Hospitalization"
+          asp-action="CreateHospitalization"
+          enctype="multipart/form-data"
+          class="w-50">
+
+        <div class="mb-3">
+            <label asp-for="MedicalCardId" class="form-label">Номер Мед карты пациента</label>
+            <input asp-for="MedicalCardId"  class="form-control" type="text">
+            <span asp-validation-for="MedicalCardId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="HospitalizationCode" class="form-label">Код госпитализации</label>
+            <input asp-for="HospitalizationCode"  class="form-control" type="text">
+            <span asp-validation-for="HospitalizationCode" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Price" class="form-label">Цена</label>
+            <input asp-for="Price"  class="form-control" type="text">
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Goal" class="form-label">Цель госпитализации</label>
+            <input asp-for="Goal"  class="form-control" type="text">
+            <span asp-validation-for="Goal" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="HospitalRoom" class="form-label">номер отделения</label>
+            <input asp-for="HospitalRoom"  class="form-control" type="text">
+            <span asp-validation-for="HospitalRoom" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Bed" class="form-label">номер койки(А, Б, В, Г..)</label>
+            <input asp-for="Bed"  class="form-control" type="text">
+            <span asp-validation-for="Bed" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="StartDate" class="form-label">Дата старта госпитализации</label>
+            <input asp-for="StartDate"  class="form-control" type="date">
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="EndDate" class="form-label">Дата конца госпитализации</label>
+            <input asp-for="EndDate"  class="form-control" type="date">
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+        @if (ViewBag.Message != "registred")
+        {
+            <input type="submit" value="Зарегистрировать" class="btn btn-success" /> 
+        }
+    </form>
+</div>

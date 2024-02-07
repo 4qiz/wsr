@@ -81,7 +81,6 @@ namespace RegistrationWebApp.Controllers
 
             ////
 
-
             return View(patient);
         }
 

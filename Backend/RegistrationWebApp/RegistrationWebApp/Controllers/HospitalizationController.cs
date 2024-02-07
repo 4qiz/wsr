@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RegistrationWebApp.Data;
 using RegistrationWebApp.DTO;
+using RegistrationWebApp.Models;
 
 namespace RegistrationWebApp.Controllers
 {
@@ -16,6 +17,25 @@ namespace RegistrationWebApp.Controllers
 
         public IActionResult Index()
         {
+            return View();
+        }
+
+        public IActionResult CreateHospitalization()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateHospitalization(Hospitalization hospitalization)
+        {
+            hospitalization.IsCanceled = false;
+            hospitalization.CancelReason = " ";
+
+            _context.Add(hospitalization);
+            _context.SaveChanges();
+            ViewBag.Message = "registred";
+
+
             return View();
         }
 
