@@ -112,7 +112,11 @@
             <input asp-for="Goal" readonly class="form-control" type="text">
             <span asp-validation-for="Goal" class="text-danger"></span>
         </div>
-
+        <div class="mb-3">
+            <label asp-for="Diagnosys" class="form-label">Диагноз</label>
+            <input asp-for="Diagnosys" readonly class="form-control" type="text">
+            <span asp-validation-for="Diagnosys" class="text-danger"></span>
+        </div>
         <div class="mb-3">
             <label asp-for="HospitalRoom" class="form-label">номер отделения</label>
             <input asp-for="HospitalRoom" readonly class="form-control" type="text">
@@ -138,6 +142,13 @@
                 <label class="form-label">@Model.CancelReason</label>
             </div>
         }
+        <a asp-controller="Hospitalization"
+           asp-action="Edit"
+           asp-route-id="@Model.HospitalizationId"
+           type="button"
+           class="btn btn-outline-secondary">
+            Редактировать
+        </a>
         <br>
     </form>
 

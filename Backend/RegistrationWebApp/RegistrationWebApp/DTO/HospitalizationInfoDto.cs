@@ -52,5 +52,7 @@
 
         public string CancelReason { get; set; } = null!;
 
+        public string Diagnosys { get; set; } = null!;
+
     }
 }

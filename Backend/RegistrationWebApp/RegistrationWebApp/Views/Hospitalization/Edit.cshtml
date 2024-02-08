@@ -5,60 +5,70 @@
 @{
 }
 <div class="align-self-center">
-    @if (ViewBag.Message == "registred")
+    @if (ViewBag.Message == "edited")
     {
-        <h2>Госпитализация создана</h2>
+        <h2>Госпитализация изменeна</h2>
     }
     <form method="post"
           asp-antiforgery="true"
           asp-controller="Hospitalization"
-          asp-action="CreateHospitalization"
+          asp-action="Edit"
           enctype="multipart/form-data"
           class="w-50">
 
         <div class="mb-3">
             <label asp-for="MedicalCardId" class="form-label">Номер Мед карты пациента</label>
-            <input asp-for="MedicalCardId"  class="form-control" type="text">
+            <input asp-for="MedicalCardId" class="form-control" type="text">
             <span asp-validation-for="MedicalCardId" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="HospitalizationCode" class="form-label">Код госпитализации</label>
-            <input asp-for="HospitalizationCode"  class="form-control" type="text">
+            <input asp-for="HospitalizationCode" class="form-control" type="text">
             <span asp-validation-for="HospitalizationCode" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Price" class="form-label">Цена</label>
-            <input asp-for="Price"  class="form-control" type="text">
+            <input asp-for="Price" class="form-control" type="text">
             <span asp-validation-for="Price" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Goal" class="form-label">Цель госпитализации</label>
-            <input asp-for="Goal"  class="form-control" type="text">
+            <input asp-for="Goal" class="form-control" type="text">
             <span asp-validation-for="Goal" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="HospitalRoom" class="form-label">номер отделения</label>
-            <input asp-for="HospitalRoom"  class="form-control" type="text">
+            <input asp-for="HospitalRoom" class="form-control" type="text">
             <span asp-validation-for="HospitalRoom" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Bed" class="form-label">номер койки(А, Б, В, Г..)</label>
-            <input asp-for="Bed"  class="form-control" type="text">
+            <input asp-for="Bed" class="form-control" type="text">
             <span asp-validation-for="Bed" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="StartDate" class="form-label">Дата старта госпитализации</label>
-            <input asp-for="StartDate"  class="form-control" type="date">
+            <input asp-for="StartDate" class="form-control" type="date">
             <span asp-validation-for="StartDate" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="EndDate" class="form-label">Дата конца госпитализации</label>
-            <input asp-for="EndDate"  class="form-control" type="date">
+            <input asp-for="EndDate" class="form-control" type="date">
             <span asp-validation-for="EndDate" class="text-danger"></span>
         </div>
-        @if (ViewBag.Message != "registred")
+        <div class="mb-3">
+            <label asp-for="IsCanceled" class="form-label">Отменить госпитализацию</label>
+            <input asp-for="IsCanceled" class="" type="checkbox">
+            <span asp-validation-for="IsCanceled" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="CancelReason" class="form-label">Причина отмены госпитализации</label>
+            <input asp-for="CancelReason" class="form-control" type="text">
+            <span asp-validation-for="CancelReason" class="text-danger"></span>
+        </div>
+        @if (ViewBag.Message != "edited")
         {
-            <input type="submit" value="Зарегистрировать" class="btn btn-success" /> 
+            <input type="submit" value="Изменить" class="btn btn-success" />
         }
     </form>
 </div>
