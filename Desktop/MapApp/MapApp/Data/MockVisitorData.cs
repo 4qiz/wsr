@@ -11,7 +11,6 @@ namespace MapApp.Data
         {
             using HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(ApiUrl);
-            response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
 
             List<Visitor> visitors = JsonConvert.DeserializeObject<List<Visitor>>(responseBody);
