@@ -16,8 +16,12 @@ namespace MapApp.Data
             {
                 using HttpClient client = new HttpClient();
                 var response = await client.GetFromJsonAsync<CurrentUser>(Url + $"Users/{login}/{password}");
-
-                return response.Name != null;
+                if (response is not null)
+                {
+                    CurrentUser = response;
+                    return response.Name != null;
+                }
+                return false;
             }
             catch (Exception ex)
             {

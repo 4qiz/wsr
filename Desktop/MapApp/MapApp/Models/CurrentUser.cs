@@ -16,8 +16,6 @@ namespace MapApp.Models
 
         public string PhoneNumber { get; set; } = null!;
 
-        public byte[] Password { get; set; } = null!;
-
         public string Email { get; set; } = null!;
 
     }

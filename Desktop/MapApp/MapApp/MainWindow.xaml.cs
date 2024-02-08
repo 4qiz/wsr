@@ -19,7 +19,7 @@ namespace MapApp
         public MainWindow()
         {
             InitializeComponent();
-            //ContentFrame.Content = new TrackingPage();
+            ContentFrame.Content = new TrackingPage();
         }
 
         private void btn1_Click(object sender, RoutedEventArgs e)
