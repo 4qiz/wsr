@@ -27,7 +27,9 @@ namespace MapApp
 
         private  async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            await AuthorizeDoctor(loginTextBox.Text, passwordBox.Password);
+            new MainWindow().Show();
+            Close();
+            //await AuthorizeDoctor(loginTextBox.Text, passwordBox.Password);
         }
 
         private async Task AuthorizeDoctor(string login, string password)

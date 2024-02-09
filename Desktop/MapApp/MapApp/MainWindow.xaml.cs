@@ -31,5 +31,17 @@ namespace MapApp
         {
             ContentFrame.Content = new BedsPage();
         }
+
+        private void AddXYBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Content = new AddXYPage();
+
+        }
+
+        private void DragnDropBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Content = new BedsDragnDropPage();
+
+        }
     }
 }

@@ -25,6 +25,8 @@
         <StackPanel Orientation="Vertical" Grid.Row="1" >
             <Button Content="Отслеживание" x:Name="btn1" Click="btn1_Click"/>
             <Button Content="Перемещения" x:Name="btn2" Click="btn2_Click"/>
+            <Button Content="Add XY" x:Name="AddXYBtn" Click="AddXYBtn_Click"/>
+            <Button Content="Перемещения" x:Name="DragnDropBtn" Click="DragnDropBtn_Click"/>
         </StackPanel>
         <Frame Grid.Row="1" Grid.Column="1" x:Name="ContentFrame"/>
     </Grid>

@@ -1,0 +1,28 @@
+﻿<Page x:Class="MapApp.BedsDragnDropPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MapApp"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="BedsDragnDropPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <Canvas x:Name="myCanvas">
+                <Viewbox Width="900" Height="600">
+                    <Image Source="/Images/map2.png" Stretch="Uniform"/>
+                </Viewbox>
+
+            </Canvas>
+        </StackPanel>
+
+        <ListBox >
+        </ListBox>
+    </Grid>
+</Page>
