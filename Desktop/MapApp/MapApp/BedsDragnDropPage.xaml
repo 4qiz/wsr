@@ -3,26 +3,54 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:dd="urn:gong-wpf-dragdrop"
       xmlns:local="clr-namespace:MapApp"
+      xmlns:cc="clr-namespace:MapApp.Custom"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="BedsDragnDropPage">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0">
+        <StackPanel Grid.Column="0"
+                    Margin="200 0 0 0">
             <Canvas x:Name="myCanvas">
                 <Viewbox Width="900" Height="600">
                     <Image Source="/Images/map2.png" Stretch="Uniform"/>
                 </Viewbox>
-
             </Canvas>
         </StackPanel>
 
-        <ListBox >
-        </ListBox>
+        <ListView x:Name="LeftBoundListView"
+          Grid.Row="0"
+          Grid.Column="0"
+          dd:DragDrop.IsDragSource="True"
+          dd:DragDrop.IsDropTarget="True"
+          dd:DragDrop.ShowAlwaysDropTargetAdorner="True"
+          ItemsSource="{Binding Patients}"
+                   AllowDrop="False">
+            <ListView.View>
+                <GridView>
+                    
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=Name}">
+                                    <TextBlock.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="Выписать" />
+                                        </ContextMenu>
+                                    </TextBlock.ContextMenu>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        
     </Grid>
 </Page>

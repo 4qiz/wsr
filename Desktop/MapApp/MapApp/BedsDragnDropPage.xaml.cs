@@ -1,19 +1,10 @@
 ﻿using MapApp.DataDb;
 using MapApp.ModelsDb;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using GongSolutions.Wpf.DragDrop;
+using MapApp.Custom;
 
 namespace MapApp
 {
@@ -22,30 +13,44 @@ namespace MapApp
     /// </summary>
     public partial class BedsDragnDropPage : Page
     {
-        public List<Patient> Patients { get;  set; }
+        public List<Patient> Patients { get; set; }
 
         public BedsDragnDropPage()
         {
             InitializeComponent();
+            DataContext = this;
             using var _context = new AppDbContext();
             var rooms = _context.HospitalizationRooms.ToList();
             Patients = _context.Patients.ToList();
 
-
-            foreach (var r in rooms)
+            try
             {
-                var newPanel = new WrapPanel
+                foreach (var r in rooms)
                 {
-                    Background = Brushes.Red,
-                    Width = 20,
-                    Height = 20,
-                    AllowDrop = true,
-                };
-                Point panelLocation = new Point(r.X, r.Y);
+                    var l = new DragableList() {AllowDrop = true };
+                    Point panelLocation = new Point(r.X, r.Y);
 
-                myCanvas.Children.Add(newPanel);
-                Canvas.SetLeft(newPanel, panelLocation.X);
-                Canvas.SetTop(newPanel, panelLocation.Y);
+                    myCanvas.Children.Add(l);
+                    Canvas.SetLeft(l, panelLocation.X);
+                    Canvas.SetTop(l, panelLocation.Y);
+
+                    //var newPanel = new WrapPanel
+                    //{
+                    //    Background = Brushes.Red,
+                    //    Width = 20,
+                    //    Height = 20,
+                    //    AllowDrop = true,
+                    //};
+
+                    //myCanvas.Children.Add(newPanel);
+                    //Canvas.SetLeft(newPanel, panelLocation.X);
+                    //Canvas.SetTop(newPanel, panelLocation.Y);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
