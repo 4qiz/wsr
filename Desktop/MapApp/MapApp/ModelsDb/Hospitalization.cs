@@ -15,8 +15,6 @@ public partial class Hospitalization
 
     public string? Goal { get; set; }
 
-    public int HospitalRoom { get; set; }
-
     public DateTime? StartDate { get; set; }
 
     public DateTime? EndDate { get; set; }
@@ -24,8 +22,6 @@ public partial class Hospitalization
     public bool IsCanceled { get; set; }
 
     public string CancelReason { get; set; } = null!;
-
-    public string Bed { get; set; } = null!;
 
     public int HospitalizationRoomId { get; set; }
 

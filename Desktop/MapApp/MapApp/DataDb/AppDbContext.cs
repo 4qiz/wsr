@@ -46,7 +46,7 @@ public partial class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=sql.bsite.net\\MSSQL2016;Initial Catalog = lake_wsr;User ID=lake_wsr;Password=567.tyu.;Trust Server Certificate=True;");
+        => optionsBuilder.UseSqlServer("Data Source=sql.bsite.net\\MSSQL2016; Initial Catalog = lake_wsr; User ID=lake_wsr;Password=567.tyu.;Trust Server Certificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -87,15 +87,15 @@ public partial class AppDbContext : DbContext
 
             entity.HasIndex(e => e.HospitalizationRoomId, "UQ_HospitalizationRoom").IsUnique();
 
-            entity.Property(e => e.Bed)
-                .HasMaxLength(1)
-                .IsUnicode(false)
-                .IsFixedLength();
-            entity.Property(e => e.CancelReason).HasMaxLength(100);
+            entity.Property(e => e.CancelReason)
+                .HasMaxLength(100)
+                .HasDefaultValue("-");
             entity.Property(e => e.EndDate).HasColumnType("datetime");
             entity.Property(e => e.Goal).HasMaxLength(500);
             entity.Property(e => e.Price).HasColumnType("decimal(15, 2)");
-            entity.Property(e => e.StartDate).HasColumnType("datetime");
+            entity.Property(e => e.StartDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
 
             entity.HasOne(d => d.HospitalizationRoom).WithOne(p => p.Hospitalization)
                 .HasForeignKey<Hospitalization>(d => d.HospitalizationRoomId)

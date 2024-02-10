@@ -1,10 +1,10 @@
-﻿using MapApp.DataDb;
+﻿using MapApp.Custom;
+using MapApp.DataDb;
 using MapApp.ModelsDb;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using GongSolutions.Wpf.DragDrop;
-using MapApp.Custom;
 
 namespace MapApp
 {
@@ -13,46 +13,67 @@ namespace MapApp
     /// </summary>
     public partial class BedsDragnDropPage : Page
     {
-        public List<Patient> Patients { get; set; }
+
+        public ObservableCollection<Patient> Patients { get; set; }
 
         public BedsDragnDropPage()
         {
-            InitializeComponent();
-            DataContext = this;
-            using var _context = new AppDbContext();
-            var rooms = _context.HospitalizationRooms.ToList();
-            Patients = _context.Patients.ToList();
 
+            DataContext = this;
+            InitializeComponent();
+
+            
+            UpdateRoomsPatients();
+        }
+
+        private  void UpdateRoomsPatients()
+        {
             try
             {
-                foreach (var r in rooms)
+                using var _context = new AppDbContext();
+                var rooms =  _context.HospitalizationRooms.ToList();
+                var patients =  _context.Patients
+                    .Include(p => p.MedicalCard)
+                    .ThenInclude(mc => mc.Hospitalizations)
+                    .ThenInclude(h => h.HospitalizationRoom)
+                    .ToList();
+                var patientsH = patients.Where(p => p?.MedicalCard?.Hospitalizations?.FirstOrDefault()?.EndDate > DateTime.Now).ToList();   
+                Patients = new ObservableCollection<Patient>(patientsH);
+                patientsListView.ItemsSource = patientsH;
+                foreach (var room in rooms)
                 {
-                    var l = new DragableList() {AllowDrop = true };
-                    Point panelLocation = new Point(r.X, r.Y);
+                    var name = $"{room.Bed}{room.Number}ListView";
+                    var listView = new DragableList() { Name = name, Room = room };
+                    foreach (var p in patientsH)
+                    {
+                        var patientRoomNumber = p?.MedicalCard?.Hospitalizations?.FirstOrDefault()?.HospitalizationRoom.Number;
+                        var patientBed = p?.MedicalCard?.Hospitalizations?.FirstOrDefault()?.HospitalizationRoom.Bed;
+                        if (patientRoomNumber == room.Number && patientBed == room.Bed)
+                        {
+                            listView.Patients.Add(p);
+                        }
+                    }
+                    Point panelLocation = new Point(room.X, room.Y);
 
-                    myCanvas.Children.Add(l);
-                    Canvas.SetLeft(l, panelLocation.X);
-                    Canvas.SetTop(l, panelLocation.Y);
-
-                    //var newPanel = new WrapPanel
-                    //{
-                    //    Background = Brushes.Red,
-                    //    Width = 20,
-                    //    Height = 20,
-                    //    AllowDrop = true,
-                    //};
-
-                    //myCanvas.Children.Add(newPanel);
-                    //Canvas.SetLeft(newPanel, panelLocation.X);
-                    //Canvas.SetTop(newPanel, panelLocation.Y);
+                    myCanvas.Children.Add(listView);
+                    Canvas.SetLeft(listView, panelLocation.X);
+                    Canvas.SetTop(listView, panelLocation.Y);
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
+        private  void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+             UpdateRoomsPatients();
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

@@ -14,27 +14,52 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
         <StackPanel Grid.Column="0"
                     Margin="200 0 0 0">
             <Canvas x:Name="myCanvas">
                 <Viewbox Width="900" Height="600">
                     <Image Source="/Images/map2.png" Stretch="Uniform"/>
                 </Viewbox>
+
             </Canvas>
         </StackPanel>
 
-        <ListView x:Name="LeftBoundListView"
+        <ListView x:Name="patientsListView"
           Grid.Row="0"
           Grid.Column="0"
-          dd:DragDrop.IsDragSource="True"
-          dd:DragDrop.IsDropTarget="True"
-          dd:DragDrop.ShowAlwaysDropTargetAdorner="True"
-          ItemsSource="{Binding Patients}"
                    AllowDrop="False">
+          <!--ItemsSource="{Binding Patients}"-->
+          <!--dd:DragDrop.IsDragSource="True"
+          dd:DragDrop.IsDropTarget="True"
+          dd:DragDrop.ShowAlwaysDropTargetAdorner="True"-->
             <ListView.View>
                 <GridView>
                     
                     <GridViewColumn>
+                        <GridViewColumn.Header>
+                            <TextBlock Text="ID"/>
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=PatientId}">
+                                    <TextBlock.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="Выписать" />
+                                        </ContextMenu>
+                                    </TextBlock.ContextMenu>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn>
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Имя"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Path=Name}">
@@ -51,6 +76,10 @@
             </ListView.View>
         </ListView>
 
-        
+        <StackPanel>
+        <Button Grid.Row="1" Content="Обновить" Click="UpdateButton_Click"/>
+        <Button Grid.Row="1" Content="Save" Click="SaveButton_Click"/>
+            
+        </StackPanel>
     </Grid>
 </Page>
