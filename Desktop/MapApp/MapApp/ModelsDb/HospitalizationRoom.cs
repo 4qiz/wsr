@@ -15,5 +15,5 @@ public partial class HospitalizationRoom
 
     public string Bed { get; set; } = null!;
 
-    public virtual Hospitalization? Hospitalization { get; set; }
+    public virtual ICollection<Hospitalization> Hospitalizations { get; set; } = new List<Hospitalization>();
 }

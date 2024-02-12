@@ -17,12 +17,10 @@
     <Grid>
         <ListView x:Name="bedListView"
             Height="30"
-            Width="50"
+            Width="30"
             dd:DragDrop.IsDragSource="True"
             dd:DragDrop.IsDropTarget="True"
-            
-            
-            
+   
             ItemsSource="{Binding Patients}"
             >
             <ListView.View>

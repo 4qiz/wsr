@@ -85,8 +85,6 @@ public partial class AppDbContext : DbContext
 
             entity.HasIndex(e => e.HospitalizationId, "IX_Hospitalization");
 
-            entity.HasIndex(e => e.HospitalizationRoomId, "UQ_HospitalizationRoom").IsUnique();
-
             entity.Property(e => e.CancelReason)
                 .HasMaxLength(100)
                 .HasDefaultValue("-");
@@ -97,8 +95,8 @@ public partial class AppDbContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
 
-            entity.HasOne(d => d.HospitalizationRoom).WithOne(p => p.Hospitalization)
-                .HasForeignKey<Hospitalization>(d => d.HospitalizationRoomId)
+            entity.HasOne(d => d.HospitalizationRoom).WithMany(p => p.Hospitalizations)
+                .HasForeignKey(d => d.HospitalizationRoomId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Hospitalization_HospitalizationRoom");
 

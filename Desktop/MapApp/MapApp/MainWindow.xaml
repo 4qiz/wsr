@@ -18,7 +18,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="AUTO"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -28,6 +28,9 @@
             <Button Content="Add XY" x:Name="AddXYBtn" Click="AddXYBtn_Click"/>
             <Button Content="Перемещения" x:Name="DragnDropBtn" Click="DragnDropBtn_Click"/>
         </StackPanel>
-        <Frame Grid.Row="1" Grid.Column="1" x:Name="ContentFrame"/>
+        <Frame Grid.Row="1" Grid.Column="1" x:Name="ContentFrame" NavigationUIVisibility="Hidden"/>
+        <Button Content="Back" Click="Button_Click" 
+                Grid.Column="1" Width="40" 
+                HorizontalAlignment="Left"/>
     </Grid>
 </Window>
