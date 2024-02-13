@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MainApi.Models;
+namespace MainApi.ModelsDb;
 
 public partial class Therapy
 {
@@ -26,6 +26,10 @@ public partial class Therapy
     public string? Direction { get; set; }
 
     public DateTime? Date { get; set; }
+
+    public byte[]? VoiceMessage { get; set; }
+
+    public int CabinetNumber { get; set; }
 
     public virtual Doctor Doctor { get; set; } = null!;
 

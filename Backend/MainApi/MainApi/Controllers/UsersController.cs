@@ -1,6 +1,6 @@
-﻿using MainApi.Data;
+﻿using MainApi.DataDb;
 using MainApi.DTOs;
-using MainApi.Models;
+using MainApi.ModelsDb;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
@@ -17,13 +17,6 @@ namespace MainApi.Controllers
         public UsersController(AppDbContext context)
         {
             _context = context;
-        }
-
-        // GET: api/Users
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        {
-            return await _context.Users.ToListAsync();
         }
 
         // GET: api/Users/5

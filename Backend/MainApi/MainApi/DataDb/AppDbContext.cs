@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using MainApi.Models;
+using MainApi.ModelsDb;
 using Microsoft.EntityFrameworkCore;
 
-namespace MainApi.Data;
+namespace MainApi.DataDb;
 
 public partial class AppDbContext : DbContext
 {
@@ -18,9 +18,15 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<AdminUser> AdminUsers { get; set; }
 
+    public virtual DbSet<Appointment> Appointments { get; set; }
+
+    public virtual DbSet<Cabinet> Cabinets { get; set; }
+
     public virtual DbSet<Doctor> Doctors { get; set; }
 
     public virtual DbSet<Hospitalization> Hospitalizations { get; set; }
+
+    public virtual DbSet<HospitalizationRoom> HospitalizationRooms { get; set; }
 
     public virtual DbSet<InsurancePolicy> InsurancePolicies { get; set; }
 
@@ -30,7 +36,9 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<RegistrationStaff> RegistrationStaffs { get; set; }
 
-    public virtual DbSet<Schedule> Schedules { get; set; }
+    public virtual DbSet<ScheduleTemplate> ScheduleTemplates { get; set; }
+
+    public virtual DbSet<Specialization> Specializations { get; set; }
 
     public virtual DbSet<Therapy> Therapies { get; set; }
 
@@ -44,7 +52,7 @@ public partial class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=sql.bsite.net\\MSSQL2016;User ID=lake_wsr;Password=567.tyu.;Trust Server Certificate=True;");
+        => optionsBuilder.UseSqlServer("Data Source=sql.bsite.net\\MSSQL2016; Initial Catalog = lake_wsr; User ID=lake_wsr;Password=567.tyu.;Trust Server Certificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -62,6 +70,20 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("FK_AdminUser_User");
         });
 
+        modelBuilder.Entity<Appointment>(entity =>
+        {
+            entity.ToTable("Appointment");
+        });
+
+        modelBuilder.Entity<Cabinet>(entity =>
+        {
+            entity.ToTable("Cabinet");
+
+            entity.Property(e => e.Number)
+                .HasMaxLength(10)
+                .IsFixedLength();
+        });
+
         modelBuilder.Entity<Doctor>(entity =>
         {
             entity.HasKey(e => e.DoctorId).HasName("PK_Doctor_1");
@@ -69,12 +91,16 @@ public partial class AppDbContext : DbContext
             entity.ToTable("Doctor");
 
             entity.Property(e => e.DoctorId).ValueGeneratedNever();
-            entity.Property(e => e.Specialization).HasMaxLength(200);
 
             entity.HasOne(d => d.DoctorNavigation).WithOne(p => p.Doctor)
                 .HasForeignKey<Doctor>(d => d.DoctorId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Doctor_User");
+
+            entity.HasOne(d => d.Specialization).WithMany(p => p.Doctors)
+                .HasForeignKey(d => d.SpecializationId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Doctor_Specialization");
         });
 
         modelBuilder.Entity<Hospitalization>(entity =>
@@ -83,20 +109,34 @@ public partial class AppDbContext : DbContext
 
             entity.HasIndex(e => e.HospitalizationId, "IX_Hospitalization");
 
-            entity.Property(e => e.Bed)
-                .HasMaxLength(1)
-                .IsUnicode(false)
-                .IsFixedLength();
-            entity.Property(e => e.CancelReason).HasMaxLength(100);
+            entity.Property(e => e.CancelReason)
+                .HasMaxLength(100)
+                .HasDefaultValue("-");
             entity.Property(e => e.EndDate).HasColumnType("datetime");
             entity.Property(e => e.Goal).HasMaxLength(500);
             entity.Property(e => e.Price).HasColumnType("decimal(15, 2)");
-            entity.Property(e => e.StartDate).HasColumnType("datetime");
+            entity.Property(e => e.StartDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+
+            entity.HasOne(d => d.HospitalizationRoom).WithMany(p => p.Hospitalizations)
+                .HasForeignKey(d => d.HospitalizationRoomId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Hospitalization_HospitalizationRoom");
 
             entity.HasOne(d => d.MedicalCard).WithMany(p => p.Hospitalizations)
                 .HasForeignKey(d => d.MedicalCardId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Hospitalization_MedicalCard");
+        });
+
+        modelBuilder.Entity<HospitalizationRoom>(entity =>
+        {
+            entity.ToTable("HospitalizationRoom");
+
+            entity.Property(e => e.Bed)
+                .HasMaxLength(1)
+                .IsFixedLength();
         });
 
         modelBuilder.Entity<InsurancePolicy>(entity =>
@@ -161,11 +201,18 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("FK_RegistrationStaff_User");
         });
 
-        modelBuilder.Entity<Schedule>(entity =>
+        modelBuilder.Entity<ScheduleTemplate>(entity =>
         {
-            entity.ToTable("Schedule");
+            entity.HasKey(e => e.ShiftId).HasName("PK_Shift");
 
-            entity.Property(e => e.ScheduleId).ValueGeneratedNever();
+            entity.ToTable("ScheduleTemplate");
+        });
+
+        modelBuilder.Entity<Specialization>(entity =>
+        {
+            entity.ToTable("Specialization");
+
+            entity.Property(e => e.Title).HasMaxLength(100);
         });
 
         modelBuilder.Entity<Therapy>(entity =>

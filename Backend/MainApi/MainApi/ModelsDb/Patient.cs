@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MainApi.Models;
+namespace MainApi.ModelsDb;
 
 public partial class Patient
 {
