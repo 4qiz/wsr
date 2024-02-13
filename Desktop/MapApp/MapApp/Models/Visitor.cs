@@ -8,7 +8,7 @@ namespace MapApp.Models
 {
     public class Visitor
     {
-        public int PersonCode { get; set; }
+        public string PersonCode { get; set; }
         public string PersonRole { get; set; }
         public int LastSecurityPointNumber { get; set; }
         public string LastSecurityPointDirection { get; set; }

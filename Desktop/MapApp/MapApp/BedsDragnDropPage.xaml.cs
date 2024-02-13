@@ -93,6 +93,7 @@ namespace MapApp
                     using var _context = new AppDbContext();
                     _context.Update(hospitalization);
                     _context.SaveChanges();
+                    MessageBox.Show("Сохранено");
                 }
             }
         }

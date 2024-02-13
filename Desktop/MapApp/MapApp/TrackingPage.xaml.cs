@@ -61,7 +61,7 @@ namespace MapApp
                 {
                     var personRole = visitor.LastVisit.PersonRole;
                     var skudNumber = visitor.LastVisit.LastSecurityPointNumber;
-                    var markerColor = personRole == "Сотрудник" ? Brushes.Blue : Brushes.Green;
+                    var markerColor = personRole == "employee" ? Brushes.Blue : Brushes.Green;
 
                     _skuds[skudNumber].Children.Add(new Ellipse
                     {
@@ -74,6 +74,7 @@ namespace MapApp
             }
             catch (Exception)
             {
+                //throw;
                 return;
             }
         }
