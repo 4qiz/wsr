@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Reflection.Metadata;
 using ZXing;
 using ZXing.QrCode;
+using ZXing.QrCode.Internal;
+using ZXing.Windows.Compatibility;
 
 namespace RegistrationWebApp.Controllers
 {
@@ -60,21 +62,16 @@ namespace RegistrationWebApp.Controllers
 
             _context.Add(patient);
             _context.SaveChanges();
-            /////
+            /////generating qrcode
             var newPatient = _context.Patients.FirstOrDefault(p => p.Passport == patient.Passport);
-
-            var writer = new QRCodeWriter();
-            var resBit = writer.encode(newPatient.MedicalCardId.ToString(), BarcodeFormat.QR_CODE, 200, 200);
-            var matrix = resBit;
-            Bitmap result = new Bitmap(matrix.Width, matrix.Height);
-            for (int x = 0; x < matrix.Height; x++)
+            BarcodeWriter writer = new BarcodeWriter(); 
+            writer.Options = new QrCodeEncodingOptions()
             {
-                for (int y = 0; y < matrix.Width; y++)
-                {
-                    Color pixel = matrix[x, y] ? Color.Black : Color.White;
-                    result.SetPixel(x, y, pixel);
-                }
-            }
+                Height = 200,
+                Width = 200,
+            };
+            writer.Format = BarcodeFormat.QR_CODE;
+            Bitmap result = writer.Write(newPatient.MedicalCardId.ToString());
             string webRootPath = _hostEnvironment.WebRootPath;
             result.Save(webRootPath + "\\Images\\Qrcode.png");
             ViewBag.URL = "\\Images\\Qrcode.png";
