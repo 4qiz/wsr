@@ -15,34 +15,35 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="9*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
         
         <Button Click="GoBackButton_Click" Content="Назад" 
                 Grid.Column="1"
                 Width="100"
+                Height="40"
                 HorizontalAlignment="Left"/>
         
         <StackPanel Grid.Row="1">
             <Button Content="расписание"
                     Click="SchedulePageButton_Click"
                     x:Name="scheduleButtonPage"
-                    />
+                    Margin="0"/>
             <Button Content="расписание"
                 Click="RegisterPatientPageButton_Click"
                 x:Name="registerPatientPageButton"
-                />
+                Margin="0"/>
             <Button Content="выдача направлений"
                 Click="ReservPatientPageButton_Click"
                 x:Name="reservePatientPageButton"
-                />
+                Margin="0"/>
             
 
         </StackPanel>
-        <Frame x:Name="ContentFrame" Grid.Column="1" Grid.Row="1"/>
+        <Frame x:Name="ContentFrame" Grid.Column="1" Grid.Row="1" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

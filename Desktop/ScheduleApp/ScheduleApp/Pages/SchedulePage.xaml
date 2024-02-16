@@ -9,6 +9,54 @@
       Title="SchedulePage">
 
     <Grid>
-        
+        <Grid.RowDefinitions >
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--filters-->
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBlock Text="представление расписания"/>
+            <Button Content="недельное" 
+                    x:Name="weekButton" 
+                    Click="WeekButton_Click"
+                    Style="{StaticResource SmButton}"/>
+            <Button Content="дневное"
+                    x:Name="dayButton" Click="DayButton_Click"
+                    Style="{StaticResource SmButton}"
+                    />
+        </StackPanel> 
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Grid.Column="0">
+                <TextBlock  Text="поиск по имени врача"/>
+                <TextBox x:Name="searchByDoctorTextBox" />
+            </StackPanel>
+            <StackPanel  Grid.Column="1">
+                <TextBlock  Text="тип специлистa"/>
+                <TextBox x:Name="searchBySpecializationTextBox" />
+            </StackPanel>
+
+            <StackPanel  Grid.Column="2">
+                <TextBlock  Text="дата от"/>
+                <DatePicker x:Name="startDatePicker"/>
+            </StackPanel>
+            <StackPanel  Grid.Column="3">
+                <TextBlock  Text="дата до"/>
+                <DatePicker x:Name="endDatePicker"/>
+            </StackPanel>
+        </Grid>
+        <ListView ItemsSource="{Binding ScheduleList}" Grid.Row="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="" DisplayMemberBinding="{Binding }"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Page>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ScheduleApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,29 +11,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ScheduleApp.Pages
+namespace ScheduleApp.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для SchedulePage.xaml
+    /// Логика взаимодействия для EditEventWindow.xaml
     /// </summary>
-    public partial class SchedulePage : Page
+    public partial class EditEventWindow : Window
     {
-        public SchedulePage()
+        public EditEventWindow(ScheduleItem scheduleItem = null)
         {
             InitializeComponent();
-        }
-
-        private void WeekButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void DayButton_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
