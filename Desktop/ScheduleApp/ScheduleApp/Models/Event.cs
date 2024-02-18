@@ -13,31 +13,21 @@ public partial class Event
 
     public decimal Price { get; set; }
 
-    public int? HospitalizationCode { get; set; }
-
     public string? Recomendations { get; set; }
 
     public int TypeId { get; set; }
 
-    public int MedicalCardId { get; set; }
-
-    public int DoctorId { get; set; }
-
-    public int? DirectionToEvent { get; set; }
-
     public byte[]? VoiceMessage { get; set; }
 
-    public virtual Event? DirectionToEventNavigation { get; set; }
+    public int PatientId { get; set; }
+
+    public virtual ICollection<BookingToEvent> BookingToEvents { get; set; } = new List<BookingToEvent>();
+
+    public virtual EventHasHospitalization? EventHasHospitalization { get; set; }
 
     public virtual ICollection<EventRecipe> EventRecipes { get; set; } = new List<EventRecipe>();
 
     public virtual ICollection<EventResult> EventResults { get; set; } = new List<EventResult>();
 
-    public virtual Hospitalization? HospitalizationCodeNavigation { get; set; }
-
-    public virtual ICollection<Event> InverseDirectionToEventNavigation { get; set; } = new List<Event>();
-
-    public virtual ICollection<ScheduleItem> ScheduleItems { get; set; } = new List<ScheduleItem>();
-
-    public virtual EventType Type { get; set; } = null!;
+    public virtual Patient Patient { get; set; } = null!;
 }

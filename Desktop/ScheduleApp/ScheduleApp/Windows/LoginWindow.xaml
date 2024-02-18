@@ -11,6 +11,7 @@
         MaxWidth="500"
         MinHeight="650" 
         MinWidth="500"
+        WindowStartupLocation="CenterScreen"
         >
   
     <Grid>

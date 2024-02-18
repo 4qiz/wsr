@@ -13,5 +13,5 @@ public partial class ScheduleMonth
 
     public bool IsApproved { get; set; }
 
-    public virtual ICollection<ScheduleItem> ScheduleItems { get; set; } = new List<ScheduleItem>();
+    public virtual ICollection<BookingToEvent> BookingToEvents { get; set; } = new List<BookingToEvent>();
 }

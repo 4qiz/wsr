@@ -23,6 +23,7 @@ namespace ScheduleApp.Windows
         public MainWindow()
         {
             InitializeComponent();
+            ContentFrame.Content = new SchedulePage();
         }
 
         private void GoBackButton_Click(object sender, RoutedEventArgs e)

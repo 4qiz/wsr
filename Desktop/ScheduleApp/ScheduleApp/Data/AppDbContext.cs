@@ -16,11 +16,15 @@ public partial class AppDbContext : DbContext
     {
     }
 
+    public virtual DbSet<BookingToEvent> BookingToEvents { get; set; }
+
     public virtual DbSet<Cabinet> Cabinets { get; set; }
 
     public virtual DbSet<Doctor> Doctors { get; set; }
 
     public virtual DbSet<Event> Events { get; set; }
+
+    public virtual DbSet<EventHasHospitalization> EventHasHospitalizations { get; set; }
 
     public virtual DbSet<EventRecipe> EventRecipes { get; set; }
 
@@ -36,24 +40,73 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<RegistrationStaff> RegistrationStaffs { get; set; }
 
-    public virtual DbSet<ScheduleItem> ScheduleItems { get; set; }
-
     public virtual DbSet<ScheduleMonth> ScheduleMonths { get; set; }
 
     public virtual DbSet<ScheduleWorkDayTemplate> ScheduleWorkDayTemplates { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
-    public virtual DbSet<UserHasPatient> UserHasPatients { get; set; }
-
     public virtual DbSet<WorkHour> WorkHours { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=sql.bsite.net\\MSSQL2016;User ID=wsr2024_SampleDB;Password=567.tyu.;Trust Server Certificate=True;");
+        => optionsBuilder.UseSqlServer("Data Source=LAKE\\SQLEXPRESS;Integrated Security=True;Trust Server Certificate=True;Initial Catalog=wsr;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<BookingToEvent>(entity =>
+        {
+            entity.HasKey(e => e.BookingId).HasName("PK_Schedule1");
+
+            entity.ToTable("BookingToEvent");
+
+            entity.Property(e => e.EventEndDate).HasColumnType("datetime");
+            entity.Property(e => e.EventStartDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.EventTypeId).HasDefaultValue(1);
+
+            entity.HasOne(d => d.Cabinet).WithMany(p => p.BookingToEvents)
+                .HasForeignKey(d => d.CabinetId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Schedule_Cabinet");
+
+            entity.HasOne(d => d.Doctor).WithMany(p => p.BookingToEvents)
+                .HasForeignKey(d => d.DoctorId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Schedule_Doctor");
+
+            entity.HasOne(d => d.Event).WithMany(p => p.BookingToEvents)
+                .HasForeignKey(d => d.EventId)
+                .HasConstraintName("FK_BookingToEvent_Event");
+
+            entity.HasOne(d => d.EventType).WithMany(p => p.BookingToEvents)
+                .HasForeignKey(d => d.EventTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_BookingToEvent_EventType");
+
+            entity.HasOne(d => d.ScheduleMonth).WithMany(p => p.BookingToEvents)
+                .HasForeignKey(d => d.ScheduleMonthId)
+                .HasConstraintName("FK_Schedule_ScheduleMonth");
+
+            entity.HasMany(d => d.Patients).WithMany(p => p.Bookings)
+                .UsingEntity<Dictionary<string, object>>(
+                    "EventHasPatient",
+                    r => r.HasOne<Patient>().WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_EventHasPatients_Patient"),
+                    l => l.HasOne<BookingToEvent>().WithMany()
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_EventHasPatients_BookingToEvent"),
+                    j =>
+                    {
+                        j.HasKey("BookingId", "PatientId");
+                        j.ToTable("EventHasPatients");
+                    });
+        });
+
         modelBuilder.Entity<Cabinet>(entity =>
         {
             entity.ToTable("Cabinet");
@@ -80,26 +133,37 @@ public partial class AppDbContext : DbContext
 
             entity.ToTable("Event");
 
-            entity.HasIndex(e => e.HospitalizationCode, "UQ_HospitalizationCode").IsUnique();
-
-            entity.Property(e => e.EventId).ValueGeneratedNever();
             entity.Property(e => e.Diagnosis).HasMaxLength(1000);
+            entity.Property(e => e.PatientId).HasDefaultValue(1);
             entity.Property(e => e.Price).HasColumnType("decimal(15, 2)");
             entity.Property(e => e.Recomendations).HasMaxLength(1000);
             entity.Property(e => e.Title).HasMaxLength(100);
 
-            entity.HasOne(d => d.DirectionToEventNavigation).WithMany(p => p.InverseDirectionToEventNavigation)
-                .HasForeignKey(d => d.DirectionToEvent)
-                .HasConstraintName("FK_Event_Event");
-
-            entity.HasOne(d => d.HospitalizationCodeNavigation).WithOne(p => p.Event)
-                .HasForeignKey<Event>(d => d.HospitalizationCode)
-                .HasConstraintName("FK_Event_Hospitalization");
-
-            entity.HasOne(d => d.Type).WithMany(p => p.Events)
-                .HasForeignKey(d => d.TypeId)
+            entity.HasOne(d => d.Patient).WithMany(p => p.Events)
+                .HasForeignKey(d => d.PatientId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Event_EventType");
+                .HasConstraintName("FK_Event_Patient");
+        });
+
+        modelBuilder.Entity<EventHasHospitalization>(entity =>
+        {
+            entity.HasKey(e => new { e.EventId, e.HospitalizationCode });
+
+            entity.ToTable("EventHasHospitalization");
+
+            entity.HasIndex(e => e.EventId, "UQ_Event").IsUnique();
+
+            entity.HasIndex(e => e.HospitalizationCode, "UQ_HasHospitalization").IsUnique();
+
+            entity.HasOne(d => d.Event).WithOne(p => p.EventHasHospitalization)
+                .HasForeignKey<EventHasHospitalization>(d => d.EventId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_EventHasHospitalization_Event");
+
+            entity.HasOne(d => d.HospitalizationCodeNavigation).WithOne(p => p.EventHasHospitalization)
+                .HasForeignKey<EventHasHospitalization>(d => d.HospitalizationCode)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_EventHasHospitalization_Hospitalization");
         });
 
         modelBuilder.Entity<EventRecipe>(entity =>
@@ -152,7 +216,9 @@ public partial class AppDbContext : DbContext
             entity.HasIndex(e => e.HospitalizationCode, "UQ_Hospitalization").IsUnique();
 
             entity.Property(e => e.HospitalizationCode).ValueGeneratedNever();
-            entity.Property(e => e.CancelReason).HasMaxLength(100);
+            entity.Property(e => e.CancelReason)
+                .HasMaxLength(100)
+                .HasDefaultValue("нет");
             entity.Property(e => e.Department).HasMaxLength(100);
             entity.Property(e => e.EndDate).HasColumnType("datetime");
             entity.Property(e => e.Goal).HasMaxLength(500);
@@ -164,6 +230,11 @@ public partial class AppDbContext : DbContext
             entity.HasOne(d => d.HospitalizationRoom).WithMany(p => p.Hospitalizations)
                 .HasForeignKey(d => d.HospitalizationRoomId)
                 .HasConstraintName("FK_Hospitalization_HospitalizationRoom");
+
+            entity.HasOne(d => d.Patient).WithMany(p => p.Hospitalizations)
+                .HasForeignKey(d => d.PatientId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Hospitalization_Patient");
         });
 
         modelBuilder.Entity<HospitalizationRoom>(entity =>
@@ -183,9 +254,11 @@ public partial class AppDbContext : DbContext
 
             entity.HasIndex(e => e.InsurancePolicyNumber, "UQ_Patient").IsUnique();
 
+            entity.Property(e => e.PatientId).ValueGeneratedNever();
             entity.Property(e => e.Address).HasMaxLength(100);
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.InsuranceCompany).HasMaxLength(100);
+            entity.Property(e => e.InsurancePolicyNumber).HasMaxLength(20);
             entity.Property(e => e.Job).HasMaxLength(200);
             entity.Property(e => e.Passport)
                 .HasMaxLength(10)
@@ -194,6 +267,11 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.PhoneNumber)
                 .HasMaxLength(11)
                 .IsFixedLength();
+
+            entity.HasOne(d => d.PatientNavigation).WithOne(p => p.Patient)
+                .HasForeignKey<Patient>(d => d.PatientId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Patient_User");
         });
 
         modelBuilder.Entity<RegistrationStaff>(entity =>
@@ -209,37 +287,6 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey<RegistrationStaff>(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_RegistrationStaff_User");
-        });
-
-        modelBuilder.Entity<ScheduleItem>(entity =>
-        {
-            entity.HasKey(e => e.ScheduleId).HasName("PK_Schedule1");
-
-            entity.ToTable("ScheduleItem");
-
-            entity.Property(e => e.ScheduleId).ValueGeneratedNever();
-            entity.Property(e => e.EventEndDate).HasColumnType("datetime");
-            entity.Property(e => e.EventStartDate).HasColumnType("datetime");
-
-            entity.HasOne(d => d.Cabinet).WithMany(p => p.ScheduleItems)
-                .HasForeignKey(d => d.CabinetId)
-                .HasConstraintName("FK_Schedule_Cabinet");
-
-            entity.HasOne(d => d.Doctor).WithMany(p => p.ScheduleItems)
-                .HasForeignKey(d => d.DoctorId)
-                .HasConstraintName("FK_Schedule_Doctor");
-
-            entity.HasOne(d => d.Event).WithMany(p => p.ScheduleItems)
-                .HasForeignKey(d => d.EventId)
-                .HasConstraintName("FK_Schedule_Event");
-
-            entity.HasOne(d => d.Patient).WithMany(p => p.ScheduleItems)
-                .HasForeignKey(d => d.PatientId)
-                .HasConstraintName("FK_Schedule_Patient");
-
-            entity.HasOne(d => d.ScheduleMonth).WithMany(p => p.ScheduleItems)
-                .HasForeignKey(d => d.ScheduleMonthId)
-                .HasConstraintName("FK_Schedule_ScheduleMonth");
         });
 
         modelBuilder.Entity<ScheduleMonth>(entity =>
@@ -270,27 +317,6 @@ public partial class AppDbContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.SurName).HasMaxLength(50);
-        });
-
-        modelBuilder.Entity<UserHasPatient>(entity =>
-        {
-            entity.HasKey(e => new { e.UserId, e.PatientId });
-
-            entity.ToTable("UserHasPatient");
-
-            entity.HasIndex(e => e.PatientId, "IX_Patient").IsUnique();
-
-            entity.HasIndex(e => e.UserId, "UQ_UserHasPatient").IsUnique();
-
-            entity.HasOne(d => d.Patient).WithOne(p => p.UserHasPatient)
-                .HasForeignKey<UserHasPatient>(d => d.PatientId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_UserHasPatient_Patient");
-
-            entity.HasOne(d => d.User).WithOne(p => p.UserHasPatient)
-                .HasForeignKey<UserHasPatient>(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_UserHasPatient_User");
         });
 
         modelBuilder.Entity<WorkHour>(entity =>

@@ -25,7 +25,7 @@ public partial class Patient
 
     public int? MedicalCardNumber { get; set; }
 
-    public int InsurancePolicyNumber { get; set; }
+    public string InsurancePolicyNumber { get; set; } = null!;
 
     public DateOnly? InsurancePolicyEndDate { get; set; }
 
@@ -33,7 +33,11 @@ public partial class Patient
 
     public string PassportIssuedBy { get; set; } = null!;
 
-    public virtual ICollection<ScheduleItem> ScheduleItems { get; set; } = new List<ScheduleItem>();
+    public virtual ICollection<Event> Events { get; set; } = new List<Event>();
 
-    public virtual UserHasPatient? UserHasPatient { get; set; }
+    public virtual ICollection<Hospitalization> Hospitalizations { get; set; } = new List<Hospitalization>();
+
+    public virtual User PatientNavigation { get; set; } = null!;
+
+    public virtual ICollection<BookingToEvent> Bookings { get; set; } = new List<BookingToEvent>();
 }

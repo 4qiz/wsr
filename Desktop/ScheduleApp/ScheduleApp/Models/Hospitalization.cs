@@ -7,13 +7,13 @@ public partial class Hospitalization
 {
     public int HospitalizationCode { get; set; }
 
-    public int MedicalCardId { get; set; }
+    public int PatientId { get; set; }
 
     public decimal Price { get; set; }
 
     public string? Goal { get; set; }
 
-    public string Department { get; set; } = null!;
+    public string? Department { get; set; }
 
     public DateTime StartDate { get; set; }
 
@@ -25,7 +25,9 @@ public partial class Hospitalization
 
     public int? HospitalizationRoomId { get; set; }
 
-    public virtual Event? Event { get; set; }
+    public virtual EventHasHospitalization? EventHasHospitalization { get; set; }
 
     public virtual HospitalizationRoom? HospitalizationRoom { get; set; }
+
+    public virtual Patient Patient { get; set; } = null!;
 }

@@ -9,5 +9,5 @@ public partial class Cabinet
 
     public int Number { get; set; }
 
-    public virtual ICollection<ScheduleItem> ScheduleItems { get; set; } = new List<ScheduleItem>();
+    public virtual ICollection<BookingToEvent> BookingToEvents { get; set; } = new List<BookingToEvent>();
 }

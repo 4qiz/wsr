@@ -6,22 +6,25 @@
       xmlns:local="clr-namespace:ScheduleApp.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="SchedulePage">
+      Title="SchedulePage"
+      xmlns:tool="http://schemas.xceed.com/wpf/xaml/toolkit">
 
     <Grid>
         <Grid.RowDefinitions >
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <!--filters-->
         <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBlock Text="дата расписания"/>
+            <DatePicker x:Name="dayDatePicker"/>
             <TextBlock Text="представление расписания"/>
-            <Button Content="недельное" 
+            <Button Content="на неделю" 
                     x:Name="weekButton" 
                     Click="WeekButton_Click"
                     Style="{StaticResource SmButton}"/>
-            <Button Content="дневное"
+            <Button Content="на день"
                     x:Name="dayButton" Click="DayButton_Click"
                     Style="{StaticResource SmButton}"
                     />
@@ -51,12 +54,24 @@
                 <DatePicker x:Name="endDatePicker"/>
             </StackPanel>
         </Grid>
-        <ListView ItemsSource="{Binding ScheduleList}" Grid.Row="2">
+        <ListView x:Name="bookingsListView" Grid.Row="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="" DisplayMemberBinding="{Binding }"/>
+                    <GridViewColumn Header="Тип" DisplayMemberBinding="{Binding Doctor.Specialization}"/>
+                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Doctor.DoctorNavigation.Name}"/>
+                    <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding Doctor.DoctorNavigation.SurName}"/>
+                    <GridViewColumn Header="Время начала" DisplayMemberBinding="{Binding EventStartDate}"/>
+                    <GridViewColumn Header="Время Окончание" DisplayMemberBinding="{Binding EventEndDate}"/>
+                    <GridViewColumn Header="Редактировать" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Редактировать" Click="EditButton_Click" FontSize="12"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
+            
         </ListView>
     </Grid>
 </Page>

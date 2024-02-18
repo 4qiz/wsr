@@ -4,19 +4,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScheduleApp.Windows"
+        xmlns:tool="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="EditEventWindow" 
         Height="720" 
         Width="1280"
         MinHeight="720" 
         MinWidth="1280"
-        >
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="начало события" Grid.Row="1"/>
+        <TextBlock Text="конец события" Grid.Row="2"/>
 
-        <DataGrid Grid.Row="1" x:Name="scheduleItemDataGrid"/>
+        <tool:DateTimePicker x:Name="startPicker"
+                             Grid.Row="1"
+                             Grid.Column="1"/>
+        <tool:DateTimePicker x:Name="endPicker"
+                     Grid.Row="2"
+                     Grid.Column="1"/>
     </Grid>
 </Window>

@@ -9,5 +9,5 @@ public partial class EventType
 
     public string Title { get; set; } = null!;
 
-    public virtual ICollection<Event> Events { get; set; } = new List<Event>();
+    public virtual ICollection<BookingToEvent> BookingToEvents { get; set; } = new List<BookingToEvent>();
 }

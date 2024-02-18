@@ -1,17 +1,6 @@
-﻿using ScheduleApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using ScheduleApp.Models;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ScheduleApp.Windows
 {
@@ -20,9 +9,15 @@ namespace ScheduleApp.Windows
     /// </summary>
     public partial class EditEventWindow : Window
     {
-        public EditEventWindow(ScheduleItem scheduleItem = null)
+        public EditEventWindow(BookingToEvent booking = null)
         {
             InitializeComponent();
+            if (booking == null)
+            {
+                MessageBox.Show("no item");
+            }
+            startPicker.Value = booking?.EventStartDate;
+            endPicker.Value = booking?.EventEndDate;
         }
     }
 }

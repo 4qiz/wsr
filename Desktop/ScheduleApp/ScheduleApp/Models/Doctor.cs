@@ -9,7 +9,7 @@ public partial class Doctor
 
     public string Specialization { get; set; } = null!;
 
-    public virtual User DoctorNavigation { get; set; } = null!;
+    public virtual ICollection<BookingToEvent> BookingToEvents { get; set; } = new List<BookingToEvent>();
 
-    public virtual ICollection<ScheduleItem> ScheduleItems { get; set; } = new List<ScheduleItem>();
+    public virtual User DoctorNavigation { get; set; } = null!;
 }
