@@ -12,8 +12,11 @@ namespace ScheduleApp.Pages
     public partial class ConfirmSchedulePage : Page
     {
         public List<BookingToEvent> Bookings { get; set; } = new();
+
         public List<BookingToEvent> MonthBookings { get; set; } = new();
+
         public List<ScheduleMonth> ScheduleMonths { get; set; } = new();
+
         public ConfirmSchedulePage()
         {
             InitializeComponent();
@@ -76,17 +79,15 @@ namespace ScheduleApp.Pages
             {
                 return;
             };
+            var scheduleMonth = new ScheduleMonth()
+            {
+                Year = (short)selectedDate.Value.Year,
+                Month = (byte)selectedDate.Value.Month,
+                IsApproved = true,
+            };
             try
             {
-                using var context = new AppDbContext();
-                var scheduleMonth = new ScheduleMonth()
-                {
-                    Year = (short)selectedDate.Value.Year,
-                    Month = (byte)selectedDate.Value.Month,
-                    IsApproved = true,
-                };
-                context.Add(scheduleMonth);
-                context.SaveChanges();
+                AddScheduleMonth(scheduleMonth);
                 isApprovedTextBlock.Visibility = Visibility.Visible;
             }
             catch (Exception ex)
@@ -94,6 +95,13 @@ namespace ScheduleApp.Pages
                 //MessageBox.Show(ex.Message);
                 throw;
             }
+        }
+
+        private static void AddScheduleMonth(ScheduleMonth scheduleMonth)
+        {
+            using var context = new AppDbContext();
+            context.Add(scheduleMonth);
+            context.SaveChanges();
         }
 
         private void MonthCalendar_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
