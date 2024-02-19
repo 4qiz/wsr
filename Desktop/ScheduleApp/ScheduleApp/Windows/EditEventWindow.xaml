@@ -29,6 +29,8 @@
         </Grid.ColumnDefinitions>
         <TextBlock Text="начало события" Grid.Row="1"/>
         <TextBlock Text="конец события" Grid.Row="2"/>
+        <TextBlock Text="Врач" Grid.Row="3"/>
+        <TextBlock Text="Кабинет" Grid.Row="4"/>
 
         <tool:DateTimePicker x:Name="startPicker"
                              Grid.Row="1"

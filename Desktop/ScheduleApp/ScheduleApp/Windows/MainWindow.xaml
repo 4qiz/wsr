@@ -34,8 +34,8 @@
                     Click="SchedulePageButton_Click"
                     x:Name="scheduleButtonPage"
                     Margin="0"/>
-            <Button Content="расписание"
-                Click="RegisterPatientPageButton_Click"
+            <Button Content="подтверждение расписания"
+                Click="ConfirmSchedulePageButton_Click"
                 x:Name="registerPatientPageButton"
                 Margin="0"/>
             <Button Content="выдача направлений"

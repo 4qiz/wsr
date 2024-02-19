@@ -28,6 +28,10 @@
                     x:Name="dayButton" Click="DayButton_Click"
                     Style="{StaticResource SmButton}"
                     />
+            <Button Content="Сбросить фильры"
+                x:Name="resetButton" Click="ResetButton_Click"
+                Style="{StaticResource SmButton}"
+                />
         </StackPanel> 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -36,28 +40,34 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
+            
+            <!--filters-->
+            
             <StackPanel Grid.Row="0" Grid.Column="0">
                 <TextBlock  Text="поиск по имени врача"/>
-                <TextBox x:Name="searchByDoctorTextBox" />
+                <TextBox x:Name="searchByDoctorTextBox"  TextChanged="SearchFitersTextBox_TextChanged"/>
             </StackPanel>
             <StackPanel  Grid.Column="1">
                 <TextBlock  Text="тип специлистa"/>
-                <TextBox x:Name="searchBySpecializationTextBox" />
+                <TextBox x:Name="searchBySpecializationTextBox" TextChanged="SearchFitersTextBox_TextChanged"/>
             </StackPanel>
 
             <StackPanel  Grid.Column="2">
                 <TextBlock  Text="дата от"/>
-                <DatePicker x:Name="startDatePicker"/>
+                <DatePicker x:Name="startDatePicker" SelectedDateChanged="FilterDatePickers_SelectedDateChanged"
+                            Margin="5"/>
             </StackPanel>
             <StackPanel  Grid.Column="3">
                 <TextBlock  Text="дата до"/>
-                <DatePicker x:Name="endDatePicker"/>
+                <DatePicker x:Name="endDatePicker" SelectedDateChanged="FilterDatePickers_SelectedDateChanged"
+                            Margin="5"/>
             </StackPanel>
         </Grid>
         <ListView x:Name="bookingsListView" Grid.Row="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Тип" DisplayMemberBinding="{Binding Doctor.Specialization}"/>
+                    <GridViewColumn Header="Тип" DisplayMemberBinding="{Binding EventType.Title}"/>
+                    <GridViewColumn Header="Специализация" DisplayMemberBinding="{Binding Doctor.Specialization}"/>
                     <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Doctor.DoctorNavigation.Name}"/>
                     <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding Doctor.DoctorNavigation.SurName}"/>
                     <GridViewColumn Header="Время начала" DisplayMemberBinding="{Binding EventStartDate}"/>
@@ -71,7 +81,15 @@
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
-            
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding EventType.Title}" Value="special">
+                            <Setter Property="Background" Value="LightCoral"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
         </ListView>
     </Grid>
 </Page>

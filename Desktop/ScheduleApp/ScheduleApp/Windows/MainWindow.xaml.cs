@@ -39,6 +39,11 @@ namespace ScheduleApp.Windows
             ContentFrame.Content = new SchedulePage();
         }
 
+        private void ConfirmSchedulePageButton_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Content = new ConfirmSchedulePage();
+        }
+
         private void RegisterPatientPageButton_Click(object sender, RoutedEventArgs e)
         {
 
