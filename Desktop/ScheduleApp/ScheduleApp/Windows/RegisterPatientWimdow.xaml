@@ -5,8 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScheduleApp.Windows"
         mc:Ignorable="d"
-        Title="RegisterPatientWimdow" Height="450" Width="800">
+        Title="RegisterPatientWimdow" 
+        Height="720"
+        Width="1280"
+        MaxWidth="1280"
+        MaxHeight="720"
+        WindowStartupLocation="CenterScreen"
+        >
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="регистрация пациента"/>
+        <TextBlock Text="имя" Grid.Row="1" HorizontalAlignment="Right"/>
+        <TextBlock Text="фамилия" Grid.Row="2" HorizontalAlignment="Right"/>
+        <TextBlock Text="Отчество" Grid.Row="3" HorizontalAlignment="Right"/>
+        <TextBlock Text="Дата рождения" Grid.Row="4" HorizontalAlignment="Right"/>
+        <TextBlock Text="пол" Grid.Row="5" HorizontalAlignment="Right"/>
+        <TextBlock Text="Емаил" Grid.Row="6" HorizontalAlignment="Right"/>
+        <TextBlock Text="НомерТелефона" Grid.Row="7" HorizontalAlignment="Right"/>
+        <TextBlock Text="адрес" Grid.Row="8" HorizontalAlignment="Right"/>
+        <TextBlock Text="полис" Grid.Row="9" HorizontalAlignment="Right"/>
+        <TextBlock Text="страховая компания" Grid.Row="10" HorizontalAlignment="Right"/>
+        <TextBlock Text="пасспорт" Grid.Row="11" HorizontalAlignment="Right"/>
+        <TextBlock Text="выдан кем" Grid.Row="12" HorizontalAlignment="Right"/>
+
+        <TextBox x:Name="nameTB" Grid.Column="1" Text="имя" Grid.Row="1" />
+        <TextBox x:Name="surnameTB" Grid.Column="1" Text="фамилия" Grid.Row="2" />
+        <TextBox x:Name="patTB" Grid.Column="1" Text="Отчество" Grid.Row="3" />
+        <DatePicker x:Name="dateofbDatePicker" Grid.Column="1" Text="10.10.2020" Grid.Row="4" />
+        <StackPanel Grid.Column="1" Grid.Row="5" Orientation="Horizontal">
+            <RadioButton x:Name="mRB" Content="мужской"/>
+            <RadioButton x:Name="gRB" Content="Женский"/>
+        </StackPanel>
+        <TextBox x:Name="emailTB" Grid.Column="1" Text="Емаил" Grid.Row="6" />
+        <TextBox x:Name="numTB" Grid.Column="1" Text="9999999999" Grid.Row="7" />
+        <TextBox x:Name="addresTB" Grid.Column="1" Text="адрес" Grid.Row="8" />
+        <TextBox x:Name="policyTB" Grid.Column="1" Text="полис" Grid.Row="9" />
+        <TextBox x:Name="insurTB" Grid.Column="1" Text="страховая компания" Grid.Row="10" />
+        <TextBox x:Name="passportTB" Grid.Column="1" Text="пасспорт" Grid.Row="11" />
+        <TextBox x:Name="isuedbyTB" Grid.Column="1" Text="выдан кем" Grid.Row="12" />
+
+        <Button Content="Зарегистрировать" Click="RegisterButton_Click"
+                Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="13" Width="400"/>
     </Grid>
 </Window>
