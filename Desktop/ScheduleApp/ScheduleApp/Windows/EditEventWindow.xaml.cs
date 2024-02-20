@@ -14,12 +14,12 @@ namespace ScheduleApp.Windows
         private bool isEdit = false;
         public BookingToEvent Booking { get; set; }
         public Patient Patient { get; set; }
-        public EditEventWindow(int bookingId = 0, Patient patient = null)
+        public EditEventWindow(int bookingId = 0, int patientId = 0)
         {
             InitializeComponent();
             try
             {
-                
+
                 using var context = new AppDbContext();
                 var doctors = context.Doctors.ToList();
                 var cabinets = context.Cabinets.ToList();
@@ -29,7 +29,7 @@ namespace ScheduleApp.Windows
                 cabinetComboBox.DisplayMemberPath = "Number";
                 if (bookingId != 0)
                 {
-                    Booking = context.BookingToEvents.FirstOrDefault(b=> b.BookingId == bookingId);
+                    Booking = context.BookingToEvents.FirstOrDefault(b => b.BookingId == bookingId);
                     startPicker.Value = Booking?.EventStartDate;
                     endPicker.Value = Booking?.EventEndDate;
                     var bookings = context.BookingToEvents.Include(b => b.Doctor).Include(b => b.Cabinet);
@@ -37,9 +37,9 @@ namespace ScheduleApp.Windows
                     cabinetComboBox.SelectedItem = bookings.FirstOrDefault(it => it.BookingId == Booking.BookingId)?.Cabinet;
                     isEdit = true;
                 }
-                else if (patient != null)
+                else if (patientId != 0)
                 {
-                    
+                    Patient = context.Patients.FirstOrDefault(it => it.PatientId == patientId);
                     isEdit = false;
                 }
 
@@ -50,8 +50,6 @@ namespace ScheduleApp.Windows
                 throw;
             }
         }
-
-
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -86,21 +84,33 @@ namespace ScheduleApp.Windows
 
         private void RegistrateBooking(DateTime startDate, DateTime endDate, Doctor doctor, Cabinet cabinet)
         {
-            var newBooking = new BookingToEvent
+            try
             {
-                EventStartDate = (DateTime)startDate,
-                EventEndDate = endDate,
-                Doctor = doctor,
-                Cabinet = cabinet,
-                IsChanged = false,
-            };
-            AddBookingToPatient(Booking, Patient);
+                var newBooking = new BookingToEvent
+                {
+                    EventStartDate = (DateTime)startDate,
+                    EventEndDate = endDate,
+                    Doctor = doctor,
+                    Cabinet = cabinet,
+                    IsChanged = false,
+                    EventTypeId = 11
+                };
+                newBooking.Patients.Add(Patient);
+                AddBookingToPatient(newBooking);
+                MessageBox.Show("added");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
-        private void AddBookingToPatient(BookingToEvent booking, Patient patient)
+        private void AddBookingToPatient(BookingToEvent booking)
         {
             using var context = new AppDbContext();
-            patient.Bookings.Add(booking);
+            context.Update(booking);
             context.SaveChanges();
         }
 
