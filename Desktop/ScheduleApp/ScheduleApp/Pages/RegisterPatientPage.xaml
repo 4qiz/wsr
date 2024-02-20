@@ -9,6 +9,35 @@
       Title="RegisterPatientPage">
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Pегистратура" FontSize="44"/>
+        <Button Content="зарегистрировать нового пациента" 
+                Click="RegisterButton_Click" Grid.Column="1"/>
+        <ListView x:Name="patientsListView" Grid.Row="1" Grid.ColumnSpan="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="med card" DisplayMemberBinding="{Binding PatientId}"/>
+                    <GridViewColumn Header="name" DisplayMemberBinding="{Binding PatientNavigation.Name}"/>
+                    <GridViewColumn Header="surname" DisplayMemberBinding="{Binding PatientNavigation.SurName}"/>
+                    <GridViewColumn Header="patronymic" DisplayMemberBinding="{Binding PatientNavigation.Patronymic}"/>
+                    <GridViewColumn >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="записать пациента" Click="BookingPatientButton_Click"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Page>

@@ -48,7 +48,6 @@ namespace ScheduleApp.Pages
             {
                 using var context = new AppDbContext();
                 Bookings = context.BookingToEvents
-                    .AsNoTracking()
                     .Include(booking => booking.Cabinet)
                     .Include(booking => booking.Doctor).ThenInclude(doctor => doctor.DoctorNavigation)
                     .Include(booking => booking.EventType)

@@ -46,12 +46,9 @@ namespace ScheduleApp.Windows
 
         private void RegisterPatientPageButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ContentFrame.Content = new RegisterPatientPage();
         }
 
-        private void ReservPatientPageButton_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
     }
 }
