@@ -14,18 +14,27 @@ namespace ScheduleApp.Windows
         private bool isEdit = false;
         public BookingToEvent Booking { get; set; }
         public Patient Patient { get; set; }
-        public EditEventWindow(BookingToEvent booking = null, Patient patient = null)
+        public EditEventWindow(int bookingId = 0, Patient patient = null)
         {
             InitializeComponent();
             try
             {
-                //using var context = new AppDbContext();
-                if (booking != null)
+                
+                using var context = new AppDbContext();
+                var doctors = context.Doctors.ToList();
+                var cabinets = context.Cabinets.ToList();
+                doctorSpecializationComboBox.ItemsSource = doctors;
+                doctorSpecializationComboBox.DisplayMemberPath = "Specialization";
+                cabinetComboBox.ItemsSource = cabinets;
+                cabinetComboBox.DisplayMemberPath = "Number";
+                if (bookingId != 0)
                 {
-                    Booking = booking;
+                    Booking = context.BookingToEvents.FirstOrDefault(b=> b.BookingId == bookingId);
                     startPicker.Value = Booking?.EventStartDate;
                     endPicker.Value = Booking?.EventEndDate;
-                    LoadDataForEditBooking();
+                    var bookings = context.BookingToEvents.Include(b => b.Doctor).Include(b => b.Cabinet);
+                    doctorSpecializationComboBox.SelectedItem = bookings.FirstOrDefault(it => it.BookingId == Booking.BookingId)?.Doctor;
+                    cabinetComboBox.SelectedItem = bookings.FirstOrDefault(it => it.BookingId == Booking.BookingId)?.Cabinet;
                     isEdit = true;
                 }
                 else if (patient != null)
@@ -33,6 +42,7 @@ namespace ScheduleApp.Windows
                     
                     isEdit = false;
                 }
+
             }
             catch (Exception)
             {
@@ -41,27 +51,7 @@ namespace ScheduleApp.Windows
             }
         }
 
-        private void LoadDataForEditBooking()
-        {
-            try
-            {
-                using var context = new AppDbContext();
-                var doctors = context.Doctors.ToList();
-                var cabinets = context.Cabinets.ToList();
-                var bookings = context.BookingToEvents.Include(b => b.Doctor).Include(b => b.Cabinet);
-                doctorSpecializationComboBox.ItemsSource = doctors;
-                doctorSpecializationComboBox.SelectedItem = bookings.FirstOrDefault(it => it.BookingId == Booking.BookingId)?.Doctor;
-                doctorSpecializationComboBox.DisplayMemberPath = "Specialization";
-                cabinetComboBox.ItemsSource = cabinets;
-                cabinetComboBox.SelectedItem = bookings.FirstOrDefault(it => it.BookingId == Booking.BookingId)?.Cabinet;
-                cabinetComboBox.DisplayMemberPath = "Number";
-            }
-            catch (Exception)
-            {
 
-                throw;
-            }
-        }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -137,7 +127,7 @@ namespace ScheduleApp.Windows
         private void UpdateBooking(BookingToEvent booking)
         {
             using var context = new AppDbContext();
-            context.Update(booking);
+            context.Update(Booking);
             context.SaveChanges();
         }
     }
