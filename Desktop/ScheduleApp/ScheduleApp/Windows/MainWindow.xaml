@@ -33,15 +33,16 @@
             <Button Content="расписание"
                     Click="SchedulePageButton_Click"
                     x:Name="scheduleButtonPage"
-                    Margin="0"/>
+                    Margin="0" IsEnabled="False"/>
             <Button Content="подтверждение расписания"
                 Click="ConfirmSchedulePageButton_Click"
-                x:Name="registerPatientPageButton"
-                Margin="0"/>
+                x:Name="confirmSchedulePageButton"
+                Margin="0" IsEnabled="False"/>
             <Button Content="регистратура"
                 Click="RegisterPatientPageButton_Click"
-                x:Name="reservePatientPageButton"
-                Margin="0"/>
+                x:Name="registerPatientPageButton"
+                Margin="0"
+                    IsEnabled="False"/>
             
 
         </StackPanel>

@@ -1,4 +1,5 @@
-﻿using ScheduleApp.Pages;
+﻿using ScheduleApp.Connection;
+using ScheduleApp.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,25 @@ namespace ScheduleApp.Windows
         public MainWindow()
         {
             InitializeComponent();
-            ContentFrame.Content = new SchedulePage();
+            if (CurrentUser.Role == "reg")
+            {
+                registerPatientPageButton.IsEnabled = true;
+                ContentFrame.Content = new RegisterPatientPage();
+            } 
+            else if (CurrentUser.Role == "doc")
+            {
+                ContentFrame.Content = new SchedulePage();
+                scheduleButtonPage.IsEnabled = true;
+            }
+            if (CurrentUser.Role == "main_doc")
+            {
+                scheduleButtonPage.IsEnabled = true;
+                confirmSchedulePageButton.IsEnabled = true;
+            }
+            if (CurrentUser.Role == "admin")
+            {
+                confirmSchedulePageButton.IsEnabled = scheduleButtonPage.IsEnabled = registerPatientPageButton.IsEnabled = true;
+            }
         }
 
         private void GoBackButton_Click(object sender, RoutedEventArgs e)
