@@ -61,7 +61,7 @@ namespace ScheduleApp.Pages
                 MessageBox.Show("null");
                 return;
             }
-            new EditEventWindow(0, patient).ShowDialog();
+            new EditEventWindow(null, patient).ShowDialog();
 
         }
     }

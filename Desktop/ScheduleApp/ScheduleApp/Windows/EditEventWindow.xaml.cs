@@ -14,12 +14,11 @@ namespace ScheduleApp.Windows
         private bool isEdit = false;
         public BookingToEvent Booking { get; set; }
         public Patient Patient { get; set; }
-        public EditEventWindow(int bookingId = 0, Patient patient = null)
+        public EditEventWindow(BookingToEvent booking = null, Patient patient = null)
         {
             InitializeComponent();
             try
             {
-                
                 using var context = new AppDbContext();
                 var doctors = context.Doctors.ToList();
                 var cabinets = context.Cabinets.ToList();
@@ -27,9 +26,9 @@ namespace ScheduleApp.Windows
                 doctorSpecializationComboBox.DisplayMemberPath = "Specialization";
                 cabinetComboBox.ItemsSource = cabinets;
                 cabinetComboBox.DisplayMemberPath = "Number";
-                if (bookingId != 0)
+                if (booking != null)
                 {
-                    Booking = context.BookingToEvents.FirstOrDefault(b=> b.BookingId == bookingId);
+                    Booking = booking;
                     startPicker.Value = Booking?.EventStartDate;
                     endPicker.Value = Booking?.EventEndDate;
                     var bookings = context.BookingToEvents.Include(b => b.Doctor).Include(b => b.Cabinet);
@@ -50,8 +49,6 @@ namespace ScheduleApp.Windows
                 throw;
             }
         }
-
-
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {

@@ -65,7 +65,7 @@ namespace ScheduleApp.Pages
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             var booking = (sender as Button)?.DataContext as BookingToEvent;
-            new EditEventWindow(booking.BookingId).ShowDialog();
+            new EditEventWindow(booking).ShowDialog();
         }
 
         private void UpdateScheduleListView(List<BookingToEvent> list) => bookingsListView.ItemsSource = list;
