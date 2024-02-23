@@ -36,13 +36,15 @@ public partial class AppDbContext : DbContext
 
             entity.ToTable("S5_IssueRequest");
 
-            entity.Property(e => e.CreatedTime).HasColumnType("datetime");
+            entity.Property(e => e.CreatedTime)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
             entity.Property(e => e.Purpose).HasMaxLength(50);
         });
 
         modelBuilder.Entity<S5IssueRequestHasMedicine>(entity =>
         {
-            entity.HasKey(e => new { e.MedicineId, e.IssueRequestId });
+            entity.HasKey(e => e.Id).HasName("PK_S5_IssueRequestHasMedicine_1");
 
             entity.ToTable("S5_IssueRequestHasMedicine");
 

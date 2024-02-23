@@ -50,7 +50,7 @@ fun MedicineDetailScreen(id: Int, context: Context) {
         }
 
         override fun onFailure(call: Call<Medicine2?>, t: Throwable) {
-            TODO("Not yet implemented")
+
         }
     })
     Column(

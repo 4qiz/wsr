@@ -3,6 +3,7 @@ package com.example.learn.screens
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.currentCompositionLocalContext
@@ -44,16 +46,17 @@ fun MedicinesList(navController: NavController, context: Context) {
 
         override fun onFailure(call: Call<List<Medicine>?>, t: Throwable) {
             Toast.makeText(
-                context,
-                "не удалось получить данные",
-                Toast.LENGTH_SHORT
+                context, "не удалось получить данные", Toast.LENGTH_SHORT
             ).show()
         }
     })
-
-    LazyColumn() {
-        items(medicinesList) {
-            MedicineItem(it, navController)
+    if (medicinesList.isEmpty()) {
+        CircularProgressIndicator()
+    } else {
+        LazyColumn {
+            items(medicinesList) {
+                MedicineItem(it, navController)
+            }
         }
     }
 }
@@ -64,7 +67,6 @@ fun MedicineItem(medicine: Medicine, navController: NavController) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .padding(3.dp)
-        .background(Color.DarkGray)
         .clickable {
             navController.navigate("medicines_list/${medicine.medicineId}")
         }) {

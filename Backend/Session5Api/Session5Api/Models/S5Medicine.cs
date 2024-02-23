@@ -13,7 +13,7 @@ public partial class S5Medicine
 
     public string Manufacturer { get; set; } = null!;
 
-    public string Image { get; set; } = null!;
+    public string? Image { get; set; }
 
     public decimal Price { get; set; }
 

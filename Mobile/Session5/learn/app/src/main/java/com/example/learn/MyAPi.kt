@@ -10,4 +10,10 @@ interface MyAPi {
 
     @GET("api/medicine/{id}")
     fun getMedicine(@Path("id") id: Int): Call<Medicine2>
+
+    @GET("api/IssueRequest")
+    fun getIssueRequestsList():Call<List<IssueRequestList>>
+
+    @GET("api/IssueRequest/{id}")
+    fun getIssueRequestDetail(@Path("id") id: Int): Call<List<IssueRequest>>
 }

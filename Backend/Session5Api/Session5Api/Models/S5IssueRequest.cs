@@ -7,7 +7,7 @@ public partial class S5IssueRequest
 {
     public int IssueRequestId { get; set; }
 
-    public DateTime CreatedTime { get; set; }
+    public DateTime? CreatedTime { get; set; }
 
     public string Purpose { get; set; } = null!;
 

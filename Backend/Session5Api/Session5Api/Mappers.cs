@@ -1,4 +1,6 @@
-﻿using Session5Api.Models;
+﻿
+
+using Session5Api.Models;
 
 namespace Session5Api
 {
@@ -27,6 +29,19 @@ namespace Session5Api
                 StockQuantity = medicine.StockQuantity,
                 TradeName = medicine.TradeName,
                 WarehouseId = medicine.WarehouseId
+            };
+
+        public static S5IssueRequest ToIssueRequestFromDto(this IssueRequestDto issueRequestDto)
+            => new S5IssueRequest { 
+                Purpose = issueRequestDto.Purpose 
+            };
+
+        public static IssueRequestDto ToDtoFromIssueRequest(this S5IssueRequest issueRequest)
+            => new IssueRequestDto
+            {
+                Purpose = issueRequest.Purpose,
+                CreatedTime = (DateTime)issueRequest.CreatedTime,
+                IssueRequestId = issueRequest.IssueRequestId
             };
     }
 }

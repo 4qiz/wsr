@@ -24,13 +24,13 @@ namespace Session5Api.Controllers
             {
                 return NotFound();
             }
-            var list = await _context.S5Medicines.ToListAsync();
-            var dtoList = new List<MedicineDto>();
-            foreach (var item in list)
+            var res = await _context.S5Medicines.ToListAsync();
+            var mapped = new List<MedicineDto>();
+            foreach (var item in res)
             {
-                dtoList.Add(item.ToMedicineFromDto());
+                mapped.Add(item.ToMedicineFromDto());
             }
-            return dtoList;
+            return mapped;
         }
 
         // GET: api/Medicine/5
@@ -82,30 +82,20 @@ namespace Session5Api.Controllers
             return NoContent();
         }
 
-        //// POST: api/Medicine
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<S5Medicine>> PostS5Medicine(List<MedicineDto> medicineDtos)
-        //{
-        //    foreach (var item in medicineDtos)
-        //    {
-        //        _context.S5Medicines.Add(item.ToMedicineFromDto());
-        //        await _context.SaveChangesAsync();
-        //    }
-
-        //    return Ok();
-        //    //return CreatedAtAction("GetS5Medicine", new { id = medicineDtos.MedicineId }, medicineDtos);
-        //}
-
+        // POST: api/Medicine
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<S5Medicine>> AddMedicine(MedicineDto medicineDtos)
+        public async Task<ActionResult<S5Medicine>> PostS5Medicine(MedicineDto medicineDto)
         {
-            _context.S5Medicines.Add(medicineDtos.ToMedicineFromDto());
+            if (_context.S5Medicines == null)
+            {
+                return Problem("Entity set 'AppDbContext.S5Medicines'  is null.");
+            }
+            var s5Medicine = medicineDto.ToMedicineFromDto();
+            _context.S5Medicines.Add(s5Medicine);
             await _context.SaveChangesAsync();
 
-
-            return Ok();
-            //return CreatedAtAction("GetS5Medicine", new { id = medicineDtos.MedicineId }, medicineDtos);
+            return CreatedAtAction("GetS5Medicine", new { id = s5Medicine.MedicineId }, s5Medicine);
         }
 
         // DELETE: api/Medicine/5

@@ -13,7 +13,7 @@ import javax.net.ssl.X509TrustManager
 
 
 fun network(): MyAPi {
-    return Retrofit.Builder().baseUrl("https://isppea.bsite.net/")
+    return Retrofit.Builder().baseUrl("https://newstiam.bsite.net/")
         .addConverterFactory(GsonConverterFactory.create())
         .client(UnsafeOkHttpClient.unsafeOkHttpClient)
         .build().create(MyAPi::class.java)

@@ -11,6 +11,8 @@ public partial class S5IssueRequestHasMedicine
 
     public int Quantity { get; set; }
 
+    public int Id { get; set; }
+
     public virtual S5IssueRequest IssueRequest { get; set; } = null!;
 
     public virtual S5Medicine Medicine { get; set; } = null!;
