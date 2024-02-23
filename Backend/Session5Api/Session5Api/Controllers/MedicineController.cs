@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Session5Api.Data;
 using Session5Api.Models;
@@ -25,13 +20,14 @@ namespace Session5Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MedicineDto>>> GetS5Medicines()
         {
-          if (_context.S5Medicines == null)
-          {
-              return NotFound();
-          }
+            if (_context.S5Medicines == null)
+            {
+                return NotFound();
+            }
             var list = await _context.S5Medicines.ToListAsync();
             var dtoList = new List<MedicineDto>();
-            foreach (var item in list) {
+            foreach (var item in list)
+            {
                 dtoList.Add(item.ToMedicineFromDto());
             }
             return dtoList;
@@ -41,10 +37,10 @@ namespace Session5Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<MedicineDto>> GetS5Medicine(int id)
         {
-          if (_context.S5Medicines == null)
-          {
-              return NotFound();
-          }
+            if (_context.S5Medicines == null)
+            {
+                return NotFound();
+            }
             var s5Medicine = await _context.S5Medicines.FindAsync(id);
 
             if (s5Medicine == null)
@@ -86,16 +82,27 @@ namespace Session5Api.Controllers
             return NoContent();
         }
 
-        // POST: api/Medicine
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //// POST: api/Medicine
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<S5Medicine>> PostS5Medicine(List<MedicineDto> medicineDtos)
+        //{
+        //    foreach (var item in medicineDtos)
+        //    {
+        //        _context.S5Medicines.Add(item.ToMedicineFromDto());
+        //        await _context.SaveChangesAsync();
+        //    }
+
+        //    return Ok();
+        //    //return CreatedAtAction("GetS5Medicine", new { id = medicineDtos.MedicineId }, medicineDtos);
+        //}
+
         [HttpPost]
-        public async Task<ActionResult<S5Medicine>> PostS5Medicine(List<MedicineDto> medicineDtos)
+        public async Task<ActionResult<S5Medicine>> AddMedicine(MedicineDto medicineDtos)
         {
-            foreach (var item in medicineDtos)
-            {
-                _context.S5Medicines.Add(item.ToMedicineFromDto());
-                await _context.SaveChangesAsync();
-            }
+            _context.S5Medicines.Add(medicineDtos.ToMedicineFromDto());
+            await _context.SaveChangesAsync();
+
 
             return Ok();
             //return CreatedAtAction("GetS5Medicine", new { id = medicineDtos.MedicineId }, medicineDtos);
