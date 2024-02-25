@@ -4,11 +4,31 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MapApp.View"
+      xmlns:gg="urn:gong-wpf-dragdrop"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="DragAndDropPage">
+      Title="DragAndDropPage"
+      >
 
-    <Grid>
+    <Grid Margin="10">
         
+        <ListView x:Name="patientsListView"
+                 gg:DragDrop.IsDragSource="True"
+                 gg:DragDrop.IsDropTarget="True"
+                  >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="мед карта" DisplayMemberBinding="{Binding MedicalCardId}"/>
+                    <GridViewColumn Header="имя" DisplayMemberBinding="{Binding FullName}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Сохранить" Click="SaveButton_Click" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+        <Canvas x:Name="canvas">
+            <Viewbox Canvas.Right="10">
+                <Image Source="/Images/dnd.png" Width="800"/>
+            </Viewbox>
+            <Canvas x:Name="mapCanvas"/>
+        </Canvas>
     </Grid>
 </Page>

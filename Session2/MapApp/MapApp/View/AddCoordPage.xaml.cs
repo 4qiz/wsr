@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapApp.View.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,12 @@ namespace MapApp.View
         public AddCoordPage()
         {
             InitializeComponent();
+        }
+
+        private void canvas_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var coord = e.GetPosition(canvas);
+            new CoordinatesWindow(coord).Show();
         }
     }
 }

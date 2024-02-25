@@ -6,7 +6,13 @@
         xmlns:local="clr-namespace:MapApp.View.Windows"
         mc:Ignorable="d"
         Title="CoordinatesWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <StackPanel>
+        <TextBox x:Name="room"/>
+        <TextBox x:Name="bed"/>
+        <RadioButton Content="A" x:Name="Arb"/>
+        <RadioButton Content="B" x:Name="Brb"/>
+        <RadioButton Content="C" x:Name="Crb"/>
+        <RadioButton Content="D" x:Name="Drb"/>
+        <Button IsDefault="True" Content="asfdsdafdsf" Click="Button_Click"/>
+    </StackPanel>
 </Window>

@@ -157,8 +157,14 @@ public partial class AppDbContext : DbContext
                 .HasMaxLength(500)
                 .HasDefaultValue("-");
             entity.Property(e => e.EndDate).HasColumnType("datetime");
-            entity.Property(e => e.HospitalizationGoal).HasMaxLength(200);
-            entity.Property(e => e.Price).HasColumnType("decimal(14, 2)");
+            entity.Property(e => e.HospitalizationCode).HasDefaultValue(0);
+            entity.Property(e => e.HospitalizationGoal)
+                .HasMaxLength(200)
+                .HasDefaultValue("-");
+            entity.Property(e => e.IsCanceled).HasDefaultValue(false);
+            entity.Property(e => e.Price)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(14, 2)");
             entity.Property(e => e.StartDate).HasColumnType("datetime");
 
             entity.HasOne(d => d.HospitalizationRoom).WithMany(p => p.Hospitalizations)

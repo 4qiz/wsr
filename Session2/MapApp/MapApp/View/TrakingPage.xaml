@@ -43,5 +43,10 @@
                 <WrapPanel x:Name="hall" Width="1150" Height="106" Canvas.Left="-2" Canvas.Top="145" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </Canvas>
         </Canvas>
+        <StackPanel VerticalAlignment="Bottom">
+             <TextBlock Text="Клиенты - Зеленый" />
+            <TextBlock Text="Персонал - Cиний" />
+        </StackPanel>
+       
     </Grid>
 </Page>

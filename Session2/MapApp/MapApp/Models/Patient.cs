@@ -13,6 +13,8 @@ public partial class Patient
 
     public string? Patronymic { get; set; }
 
+    public string FullName { get => $"{Name} {SurName} {Patronymic}"; }
+
     public DateTime? RegistrationDate { get; set; }
 
     public string Passport { get; set; } = null!;

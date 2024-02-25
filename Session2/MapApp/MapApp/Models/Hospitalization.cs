@@ -7,21 +7,21 @@ public partial class Hospitalization
 {
     public int HospitalizationId { get; set; }
 
-    public int HospitalizationCode { get; set; }
+    public int? HospitalizationCode { get; set; }
 
-    public string HospitalizationGoal { get; set; } = null!;
+    public string? HospitalizationGoal { get; set; }
 
     public int DepartmentNumber { get; set; }
 
-    public decimal Price { get; set; }
+    public decimal? Price { get; set; }
 
     public DateTime StartDate { get; set; }
 
     public DateTime EndDate { get; set; }
 
-    public bool IsCanceled { get; set; }
+    public bool? IsCanceled { get; set; }
 
-    public string CancelReason { get; set; } = null!;
+    public string? CancelReason { get; set; }
 
     public int MedicalCardId { get; set; }
 
