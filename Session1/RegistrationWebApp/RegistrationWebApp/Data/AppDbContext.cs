@@ -121,12 +121,12 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Date)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
+            entity.Property(e => e.Diagnosis).HasMaxLength(500);
             entity.Property(e => e.Recomendations).HasMaxLength(500);
             entity.Property(e => e.Title).HasMaxLength(50);
 
             entity.HasOne(d => d.Doctor).WithMany(p => p.Events)
                 .HasForeignKey(d => d.DoctorId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Event_Doctor");
 
             entity.HasOne(d => d.MedicalCard).WithMany(p => p.Events)
@@ -136,7 +136,6 @@ public partial class AppDbContext : DbContext
 
             entity.HasOne(d => d.Type).WithMany(p => p.Events)
                 .HasForeignKey(d => d.TypeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Event_Type");
         });
 
@@ -154,13 +153,11 @@ public partial class AppDbContext : DbContext
         {
             entity.ToTable("Hospitalization");
 
-            entity.Property(e => e.HospitalizationId).ValueGeneratedNever();
             entity.Property(e => e.CancelReason)
                 .HasMaxLength(500)
                 .HasDefaultValue("-");
-            entity.Property(e => e.Department).HasMaxLength(50);
             entity.Property(e => e.EndDate).HasColumnType("datetime");
-            entity.Property(e => e.Goal).HasMaxLength(50);
+            entity.Property(e => e.HospitalizationGoal).HasMaxLength(200);
             entity.Property(e => e.Price).HasColumnType("decimal(14, 2)");
             entity.Property(e => e.StartDate).HasColumnType("datetime");
 
@@ -192,7 +189,9 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Address).HasMaxLength(50);
             entity.Property(e => e.DateOfBirth).HasColumnType("datetime");
             entity.Property(e => e.Email).HasMaxLength(50);
-            entity.Property(e => e.InsurancyPolicy).HasMaxLength(50);
+            entity.Property(e => e.InsurancyPolicy)
+                .HasMaxLength(20)
+                .IsFixedLength();
             entity.Property(e => e.InsurancyPolicyCompany).HasMaxLength(50);
             entity.Property(e => e.InsurancyPolicyEndDate).HasColumnType("datetime");
             entity.Property(e => e.Name).HasMaxLength(50);
@@ -233,7 +232,7 @@ public partial class AppDbContext : DbContext
         {
             entity.ToTable("Recipe");
 
-            entity.Property(e => e.Descriptiin).HasMaxLength(500);
+            entity.Property(e => e.Description).HasMaxLength(500);
             entity.Property(e => e.Dosage).HasMaxLength(50);
             entity.Property(e => e.Title).HasMaxLength(50);
 

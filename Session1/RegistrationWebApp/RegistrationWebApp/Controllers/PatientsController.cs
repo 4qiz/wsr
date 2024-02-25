@@ -69,8 +69,36 @@ namespace RegistrationWebApp.Controllers
             {
                 return NotFound();
             }
-
+            if (patient.Qrcode == null)
+            {
+                GenerateQRCode(patient.Passport);
+            }
             return View(patient);
+        }
+
+        private  void GenerateQRCode(string passport)
+        {
+
+            var createdPatient =  _context.Patients.FirstOrDefault(p => p.Passport == passport);
+
+            if (createdPatient == null)
+            {
+                return;
+            }
+
+            BarcodeWriter writer = new BarcodeWriter();
+            writer.Options = new QrCodeEncodingOptions
+            {
+                Width = 200,
+                Height = 200
+            };
+            writer.Format = ZXing.BarcodeFormat.QR_CODE;
+            Bitmap qrcode = writer.Write(createdPatient.MedicalCardId.ToString());
+            qrcode.Save(_hostEnvironment.WebRootPath + "\\Images\\qrcode.png");
+
+            createdPatient.Qrcode = System.IO.File.ReadAllBytes(_hostEnvironment.WebRootPath + "\\Images\\qrcode.png");
+            _context.Update(createdPatient);
+            _context.SaveChanges();
         }
 
         // GET: Patients/Create

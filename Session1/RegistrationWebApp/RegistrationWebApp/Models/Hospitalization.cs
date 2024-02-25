@@ -9,9 +9,9 @@ public partial class Hospitalization
 
     public int HospitalizationCode { get; set; }
 
-    public string Goal { get; set; } = null!;
+    public string HospitalizationGoal { get; set; } = null!;
 
-    public string Department { get; set; } = null!;
+    public int DepartmentNumber { get; set; }
 
     public decimal Price { get; set; }
 

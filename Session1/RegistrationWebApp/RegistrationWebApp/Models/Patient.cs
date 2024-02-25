@@ -11,13 +11,21 @@ public partial class Patient
 
     public string SurName { get; set; } = null!;
 
-    public string Patronymic { get; set; } = null!;
+    public string? Patronymic { get; set; }
 
-    public DateTime RegistrationDate { get; set; }
+    public string? FullName
+    {
+        get
+        {
+            return SurName + " " + Name + " " + Patronymic;
+        }
+    }
+
+    public DateTime? RegistrationDate { get; set; }
 
     public string Passport { get; set; } = null!;
 
-    public string PassportIssuedBy { get; set; } = null!;
+    public string? PassportIssuedBy { get; set; }
 
     public string InsurancyPolicy { get; set; } = null!;
 

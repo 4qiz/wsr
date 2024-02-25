@@ -11,7 +11,7 @@ public partial class Event
 
     public DateTime Date { get; set; }
 
-    public int TypeId { get; set; }
+    public int? TypeId { get; set; }
 
     public string? Recomendations { get; set; }
 
@@ -19,9 +19,11 @@ public partial class Event
 
     public byte[]? VoiceMessage { get; set; }
 
-    public int DoctorId { get; set; }
+    public int? DoctorId { get; set; }
 
-    public virtual Doctor Doctor { get; set; } = null!;
+    public string? Diagnosis { get; set; }
+
+    public virtual Doctor? Doctor { get; set; }
 
     public virtual Patient MedicalCard { get; set; } = null!;
 
@@ -29,5 +31,5 @@ public partial class Event
 
     public virtual ICollection<Result> Results { get; set; } = new List<Result>();
 
-    public virtual EventType Type { get; set; } = null!;
+    public virtual EventType? Type { get; set; }
 }

@@ -11,7 +11,7 @@ public partial class Recipe
 
     public string Dosage { get; set; } = null!;
 
-    public string Descriptiin { get; set; } = null!;
+    public string Description { get; set; } = null!;
 
     public int EventId { get; set; }
 
