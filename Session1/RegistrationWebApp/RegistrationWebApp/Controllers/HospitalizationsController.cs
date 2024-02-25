@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RegistrationWebApp.Data;
@@ -24,6 +20,20 @@ namespace RegistrationWebApp.Controllers
         {
             var appDbContext = _context.Hospitalizations.Include(h => h.HospitalizationRoom).Include(h => h.MedicalCard);
             return View(await appDbContext.ToListAsync());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(int id)
+        {
+            var appDbContext = await _context.Hospitalizations
+                .Include(h => h.HospitalizationRoom)
+                .Include(h => h.MedicalCard)
+                .FirstOrDefaultAsync(h => h.HospitalizationCode == id);
+            if (appDbContext != null)
+            {
+                return RedirectToAction("Details", new { id = id });
+            }
+            return BadRequest("Не удалось найти госпитализацию");
         }
 
         // GET: Hospitalizations/Details/5
