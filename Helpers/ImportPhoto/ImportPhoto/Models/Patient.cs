@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace ImportPhoto.Models;
 
-namespace ImportPhoto.Models;
-
+[Serializable]
 public partial class Patient
 {
     public int PatientId { get; set; }
