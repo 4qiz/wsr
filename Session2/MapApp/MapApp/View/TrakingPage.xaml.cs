@@ -47,7 +47,9 @@ namespace MapApp.View
                     return;
                 }
 
-                var visitorsLastValue = Visitors.GroupBy(v => v.PersonCode).Select(g => new
+                var visitorsLastValue = Visitors
+                    .GroupBy(v => v.PersonCode)
+                    .Select(g => new
                 {
                     PersonCode = g.Key,
                     LastVisit = g.Last()

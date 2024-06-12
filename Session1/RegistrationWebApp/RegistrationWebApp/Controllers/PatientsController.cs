@@ -31,7 +31,6 @@ namespace RegistrationWebApp.Controllers
         {
             if (file != null)
             {
-                var reader = new BarcodeReaderGeneric();
                 var path = _hostEnvironment.WebRootPath + "\\Images\\qrcode.png";
                 using (var filestream = new FileStream(path, FileMode.Create))
                 {
@@ -40,17 +39,18 @@ namespace RegistrationWebApp.Controllers
                 var bitmapFromFile = (Bitmap)Image.FromFile(path);
                 using (bitmapFromFile)
                 {
+                    var reader = new BarcodeReaderGeneric();
                     var qrcode = new BitmapLuminanceSource(bitmapFromFile);
                     var decodedId = reader.Decode(qrcode);
                     if (int.TryParse(decodedId.Text, out int id))
                     {
                         if (await _context.Patients.AnyAsync(p => p.MedicalCardId == id))
                         {
-                            return RedirectToAction("Details", new {id = id});
+                            return RedirectToAction("Details", new { id = id });
                         }
                     }
                 }
-        
+
             }
             return BadRequest("Не удалось распознать номер пациента");
         }
@@ -76,10 +76,10 @@ namespace RegistrationWebApp.Controllers
             return View(patient);
         }
 
-        private  void GenerateQRCode(string passport)
+        private void GenerateQRCode(string passport)
         {
 
-            var createdPatient =  _context.Patients.FirstOrDefault(p => p.Passport == passport);
+            var createdPatient = _context.Patients.FirstOrDefault(p => p.Passport == passport);
 
             if (createdPatient == null)
             {

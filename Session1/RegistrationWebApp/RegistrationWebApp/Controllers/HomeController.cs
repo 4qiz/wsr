@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using RegistrationWebApp.Models;
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 namespace RegistrationWebApp.Controllers
 {
@@ -20,6 +22,31 @@ namespace RegistrationWebApp.Controllers
 
         public IActionResult Privacy()
         {
+            var json = @"[
+  {
+    ""applicantPersonId"": 1,
+    ""firstName"": ""hjoioi"",
+    ""surName"": ""oijoj"",
+    ""patronymic"": ""oijoij"",
+    ""jobTitle"": ""00000""
+  },
+  {
+    ""applicantPersonId"": 2,
+    ""firstName"": ""qqqqqqqq"",
+    ""surName"": ""qqqqq"",
+    ""patronymic"": ""qqqqq"",
+    ""jobTitle"": ""zzzzz""
+  },
+  {
+    ""applicantPersonId"": 3,
+    ""firstName"": ""222"",
+    ""surName"": ""3333"",
+    ""patronymic"": ""4444"",
+    ""jobTitle"": ""1111""
+  }
+]";
+            List<Class1> applicants = JsonConvert.DeserializeObject<List<Class1>>(json);
+
             return View();
         }
 
